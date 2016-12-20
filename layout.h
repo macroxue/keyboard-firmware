@@ -58,7 +58,8 @@ class Layout {
       if (!key || key == fn) return;
       if (l0 <= key && key < l0 + kMaxLayers) {
         RemoveReleasedKey(entry.row, entry.col);
-        cur_layer_ = FindLayer(key);
+        auto new_layer = FindLayer(key);
+        if (new_layer) cur_layer_ = new_layer;
         return;
       }
       if (mlc <= key && key <= msd) {

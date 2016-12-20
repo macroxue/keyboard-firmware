@@ -49,17 +49,36 @@ enum KeyCode : unsigned char {
   f14,
   f15,
 
-  prt = 169,
-  mnu,
+  mnu = 166,  // menu
+  prt,  // print screen
 
-  mlc = 171,
-  mmc,
-  mrc,
-  mdc,
-  msu,
-  msd,
+  mlc = 171,  // mouse left click
+  mmc,  // mouse middle click
+  mrc,  // mouse right click
+  mdc,  // mouse double click
+  msu,  // mouse scroll up
+  msd,  // mouse scroll down
 
-  l0 = 240,
+  pdn = 181,  // system power down
+  slp,  // system sleep
+  wak,  // system wake up
+  ply,  // play
+  pau,  // pause
+  rec,  // record
+  ffw,  // fast forward
+  rew,  // rewind
+  ntk,  // next track
+  ptk,  // previous track
+  stp,  // stop
+  ejt,  // eject
+  rpl,  // random play
+  ppa,  // play pause
+  psk,  // play skip
+  mut,  // mute
+  vup,  // volume up
+  vdn,  // volume down
+
+  l0 = 240,  // layer 0
   l1,
   l2,
   l3,
@@ -68,7 +87,7 @@ enum KeyCode : unsigned char {
   l6,
   l7,
   l8,
-  l9,
+  l9,  // layer 9
 
   fn = 255
 };
@@ -240,11 +259,11 @@ static const int key_map[256] = {
   KEY_F13,  // 163
   KEY_F14,  // 164
   KEY_F15,  // 165
-  KEY_F16,  // 166
-  0,  // 167
+  KEY_MENU,  // 166
+  KEY_PRINTSCREEN,  // 167
   0,  // 168
-  KEY_PRINTSCREEN,  // 169
-  KEY_MENU,  // 170
+  0,  // 169
+  0,  // 170
   mlc,  // 171
   mmc,  // 172
   mrc,  // 173
@@ -255,24 +274,24 @@ static const int key_map[256] = {
   0,  // 178
   0,  // 179
   0,  // 180
-  0,  // 181
-  0,  // 182
-  0,  // 183
-  0,  // 184
-  0,  // 185
-  0,  // 186
-  0,  // 187
-  0,  // 188
-  0,  // 189
-  0,  // 190
-  0,  // 191
-  0,  // 192
-  0,  // 193
-  0,  // 194
-  0,  // 195
-  0,  // 196
-  0,  // 197
-  0,  // 198
+  KEY_SYSTEM_POWER_DOWN,  // 181
+  KEY_SYSTEM_SLEEP,  // 182
+  KEY_SYSTEM_WAKE_UP,  // 183
+  KEY_MEDIA_PLAY,  // 184
+  KEY_MEDIA_PAUSE,  // 185
+  KEY_MEDIA_RECORD,  // 186
+  KEY_MEDIA_FAST_FORWARD,  // 187
+  KEY_MEDIA_REWIND,  // 188
+  KEY_MEDIA_NEXT_TRACK,  // 189
+  KEY_MEDIA_PREV_TRACK,  // 190
+  KEY_MEDIA_STOP,  // 191
+  KEY_MEDIA_EJECT,  // 192
+  KEY_MEDIA_RANDOM_PLAY,  // 193
+  KEY_MEDIA_PLAY_PAUSE,  // 194
+  KEY_MEDIA_PLAY_SKIP,  // 195
+  KEY_MEDIA_MUTE,  // 196
+  KEY_MEDIA_VOLUME_INC,  // 197
+  KEY_MEDIA_VOLUME_DEC,  // 198
   0,  // 199
   0,  // 200
   0,  // 201
