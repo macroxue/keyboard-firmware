@@ -16,9 +16,9 @@ Layer<R,C> layers[] = {
     {
       {  l7,  l6,  l5,  l4,  l3,  l2,  l1,  l0,  fn },
       {   0,   0,   0,   0,   0,   0,   0,   0,   0 },
-      { hom, pgd, pgu, end, bks, del,   0,   0,   0 },
-      {  lt,  dn,  up,  rt, msu, ent,   0,   0,   0 },
-      { mdc, mlc, mmc, mrc, msd, rsh,   0,   0,   0 },
+      { mdc, mlc, mmc, mrc, del,   0,   0,   0,   0 },
+      {  lt,  dn,  up,  rt, bks, ent,   0, del,   0 },
+      { hom, pgd, pgu, end,   0, rsh,   0,   0,   0 },
       { spc,   0, ral, rct,   0,   0,   0,   0,   0 },
     }
   },
