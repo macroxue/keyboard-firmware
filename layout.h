@@ -50,16 +50,28 @@ class Layout {
           fn_pressed_ = entries[i].pressed;
           break;
         }
+        if (key == fnl && entries[i].pressed) {
+          if (cur_layer_->fn_layer_id != cur_layer_->layer_id) {
+            const auto* fn_layer = FindLayer(cur_layer_->fn_layer_id);
+            base_layer_ = cur_layer_;
+            cur_layer_ = fn_layer;
+          } else {
+            cur_layer_ = base_layer_;
+          }
+          break;
+        }
       }
     }
 
     void Interpret(const Entry& entry, const Layer<R,C>* layer) {
       int key = key_map[layer->keys[entry.row][entry.col]];
-      if (!key || key == fn) return;
+      if (!key || key == fn || key == fnl) return;
       if (l0 <= key && key < l0 + kMaxLayers) {
         RemoveReleasedKey(entry.row, entry.col);
         auto new_layer = FindLayer(key);
-        if (new_layer) cur_layer_ = new_layer;
+        if (new_layer != cur_layer_) {
+          cur_layer_ = new_layer;
+        }
         return;
       }
       if (mlc <= key && key <= msd) {
@@ -115,6 +127,7 @@ class Layout {
     int num_layers_ = 0;
     const Layer<R,C>* layers_[kMaxLayers];
     const Layer<R,C>* cur_layer_ = nullptr;
+    const Layer<R,C>* base_layer_ = nullptr;
     bool fn_pressed_ = false;
     Events events_;
 };

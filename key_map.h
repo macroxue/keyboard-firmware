@@ -89,7 +89,8 @@ enum KeyCode : unsigned char {
   l8,
   l9,  // layer 9
 
-  fn = 255
+  fnl = 254,  // lock to fn layer
+  fn  // shift to fn layer
 };
 
 static const int key_map[256] = {
@@ -347,7 +348,7 @@ static const int key_map[256] = {
   0,  // 251
   0,  // 252
   0,  // 253
-  0,  // 254
+  fnl,  // 254
   fn   // 255
 };
 
