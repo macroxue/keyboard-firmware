@@ -8,6 +8,7 @@
 #include "matrix.h"
 #include "scanner.h"
 #include "sender.h"
+#include "translator.h"
 
 template <int R, int C>
 class Controller {
@@ -19,9 +20,19 @@ class Controller {
       Matrix<R, C> new_matrix = scanner_->Scan();
       Entry entries[kMaxEvents];
       int num_entries = matrix_.Difference(new_matrix, kMaxEvents, entries);
+      auto translator = layout_->translator();
       if (num_entries > 0) {
         Events events = layout_->Interpret(num_entries, entries);
-        sender_->Send(events);
+        if (translator) {
+          bool switch_to_base = translator->Input(events, sender_);
+          if (switch_to_base) layout_->SwitchToBase();
+        } else {
+          sender_->Send(events);
+        }
+      } else {
+        if (translator) {
+          translator->AutoRepeat();
+        }
       }
     }
 

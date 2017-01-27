@@ -3,6 +3,7 @@
 
 #include "events.h"
 #include "matrix.h"
+#include "vi_translator.h"
 
 static const int kMaxLayers = 10;
 
@@ -11,13 +12,15 @@ struct Layer {
   const char* name;
   int layer_id;
   int fn_layer_id;
+  const char* translator;
   unsigned char keys[R][C];
 };
 
 template <int R, int C>
 class Layout {
   public:
-    Layout(int num_layers, const Layer<R,C>* layers) : num_layers_(num_layers) {
+    Layout(int num_layers, const Layer<R, C>* layers, Translator* translator)
+      : num_layers_(num_layers), translator_(translator) {
       for (int i = 0; i < num_layers_; ++i) layers_[i] = &layers[i];
       cur_layer_ = FindLayer(l0);
     }
@@ -28,6 +31,19 @@ class Layout {
                                       : cur_layer_;
       for (int i = 0; i < num_entries; ++i) Interpret(entries[i], layer);
       return events_;
+    }
+
+    void SwitchToBase() {
+      if (base_layer_ != nullptr) cur_layer_ = base_layer_;
+    }
+
+    Translator* translator() {
+      if (translator_ &&
+          strcmp(cur_layer_->translator, translator_->name()) == 0) {
+        return translator_;
+      } else {
+        return nullptr;
+      }
     }
 
   private:
@@ -112,10 +128,11 @@ class Layout {
       return nullptr;
     }
 
-    int num_layers_ = 0;
+    const int num_layers_ = 0;
     const Layer<R,C>* layers_[kMaxLayers];
     const Layer<R,C>* cur_layer_ = nullptr;
     const Layer<R,C>* base_layer_ = nullptr;
+    Translator* const translator_ = nullptr;
     bool fn_pressed_ = false;
     Events events_;
 };
