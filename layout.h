@@ -1,22 +1,10 @@
 #ifndef LAYOUT_H
 #define LAYOUT_H
 
-static const int kMaxLayers = 10;
-static const int kMaxEvents = 6;
+#include "events.h"
+#include "matrix.h"
 
-struct Events {
-  Events() {
-    for (int i = 0; i < kMaxEvents; ++i) keys[i].key = 0;
-    for (int i = 0; i < msd - mlc + 1; ++i) buttons[i] = 0;
-  }
-  int modifiers = 0;
-  struct {
-    int key;
-    int row;
-    int col;
-  } keys[kMaxEvents];
-  int buttons[msd - mlc + 1];
-};
+static const int kMaxLayers = 10;
 
 template <int R, int C>
 struct Layer {

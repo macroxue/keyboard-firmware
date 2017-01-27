@@ -1,6 +1,11 @@
 #ifndef KEY_MAP_H
 #define KEY_MAP_H
 
+#ifndef LAYOUT_US_ENGLISH
+#define LAYOUT_US_ENGLISH
+#endif
+#include "keylayouts.h"
+
 enum KeyCode : unsigned char {
   bks = 8,
   tab = 9,
