@@ -33,10 +33,6 @@ class Layout {
       return events_;
     }
 
-    void SwitchToBase() {
-      if (base_layer_ != nullptr) cur_layer_ = base_layer_;
-    }
-
     Translator* translator() {
       if (translator_ &&
           strcmp(cur_layer_->translator, translator_->name()) == 0) {

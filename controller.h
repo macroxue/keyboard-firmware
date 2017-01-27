@@ -24,8 +24,7 @@ class Controller {
       if (num_entries > 0) {
         Events events = layout_->Interpret(num_entries, entries);
         if (translator) {
-          bool switch_to_base = translator->Input(events, sender_);
-          if (switch_to_base) layout_->SwitchToBase();
+          translator->Input(events, sender_);
         } else {
           sender_->Send(events);
         }

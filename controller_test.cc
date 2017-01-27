@@ -191,19 +191,19 @@ void test_with_fnl() {
 }
 
 void test_with_vi() {
-  constexpr int R = 2, C = 2;
+  constexpr int R = 2, C = 3;
 
   Layer<R,C> layers[] = {
     { "qwerty", l0, l1, "",
       {
-        {'1',fnl},
-        {'c','w'}
+        {'1',fnl, esc},
+        {'c','w', ctl}
       }
     },
     { "vi-emu", l1, l1, "vi",
       {
-        {'2',fnl},
-        {'c','w'}
+        {'2',fnl, esc},
+        {'c','w', ctl}
       }
     }
   };
@@ -222,13 +222,26 @@ void test_with_vi() {
     // w
     {1,1, true},
     {1,1, false},
-    // 1
+    // 2
     {0,0, true},
     {0,0, false},
-    // switch to l1 again
+    // ctl down
+    {1,2, true},
+    // w
+    {1,1, true},
+    {1,1, false},
+    // ctl up
+    {1,2, false},
+    // esc
+    {0,2, true},
+    {0,2, false},
+    // w
+    {1,1, true},
+    {1,1, false},
+    // switch to l0
     {0,1, true},
     {0,1, false},
-    // 2
+    // 1
     {0,0, true},
     {0,0, false},
     // w

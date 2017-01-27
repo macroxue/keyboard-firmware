@@ -10,43 +10,37 @@ class Tester {
   public:
     Tester() : translator_(&clock_) {}
 
-    bool Emit(int key) {
-      bool exit_layer = Press(key);
+    void Emit(int key) {
+      Press(key);
       Release(key);
-      return exit_layer;
     }
 
-    bool Press(int key) {
+    void Press(int key) {
       events_.keys[0].key = key;
-      bool exit_layer = translator_.Input(events_, &sender_);
-      if (exit_layer) puts("exit");
+      translator_.Input(events_, &sender_);
       translator_.AutoRepeat();
       translator_.AutoRepeat();
-      return exit_layer;
     }
 
-    bool Release(int key) {
+    void Release(int key) {
       events_.keys[0].key = 0;
-      bool exit_layer = translator_.Input(events_, &sender_);
+      translator_.Input(events_, &sender_);
       translator_.AutoRepeat();
       translator_.AutoRepeat();
-      return exit_layer;
     }
 
-    bool PressModifier(int modifier) {
+    void PressModifier(int modifier) {
       events_.modifiers |= modifier;
-      bool exit_layer = translator_.Input(events_, &sender_);
+      translator_.Input(events_, &sender_);
       translator_.AutoRepeat();
       translator_.AutoRepeat();
-      return exit_layer;
     }
 
-    bool ReleaseModifier(int modifier) {
+    void ReleaseModifier(int modifier) {
       events_.modifiers &= ~modifier;
-      bool exit_layer = translator_.Input(events_, &sender_);
+      translator_.Input(events_, &sender_);
       translator_.AutoRepeat();
       translator_.AutoRepeat();
-      return exit_layer;
     }
 
     FakeClock& clock() { return clock_; }
@@ -61,75 +55,75 @@ class Tester {
 void test_commands() {
   Tester t;
   puts("> 0");
-  assert(t.Emit(KEY_0) == false);
+  t.Emit(KEY_0);
   puts("> i");
-  assert(t.Emit(KEY_I) == true);
+  t.Emit(KEY_I);
   puts("> a");
-  assert(t.Emit(KEY_A) == true);
+  t.Emit(KEY_A);
   puts("> o");
-  assert(t.Emit(KEY_O) == true);
+  t.Emit(KEY_O);
 
   puts("> 3s");
-  assert(t.Emit(KEY_3) == false);
-  assert(t.Emit(KEY_S) == true);
+  t.Emit(KEY_3);
+  t.Emit(KEY_S);
 
   puts("> 2c3h");
-  assert(t.Emit(KEY_2) == false);
-  assert(t.Emit(KEY_C) == false);
-  assert(t.Emit(KEY_3) == false);
-  assert(t.Emit(KEY_H) == true);
+  t.Emit(KEY_2);
+  t.Emit(KEY_C);
+  t.Emit(KEY_3);
+  t.Emit(KEY_H);
 
   puts("> 2dd");
-  assert(t.Emit(KEY_2) == false);
-  assert(t.Emit(KEY_D) == false);
-  assert(t.Emit(KEY_D) == false);
+  t.Emit(KEY_2);
+  t.Emit(KEY_D);
+  t.Emit(KEY_D);
 
   puts("> dk");
-  assert(t.Emit(KEY_D) == false);
-  assert(t.Emit(KEY_K) == false);
+  t.Emit(KEY_D);
+  t.Emit(KEY_K);
 
   puts("> Gygg");
-  assert(t.PressModifier(MODIFIERKEY_SHIFT) == false);
-  assert(t.Emit(KEY_G) == false);
-  assert(t.ReleaseModifier(MODIFIERKEY_SHIFT) == false);
-  assert(t.Emit(KEY_Y) == false);
-  assert(t.Emit(KEY_G) == false);
-  assert(t.Emit(KEY_G) == false);
+  t.PressModifier(MODIFIERKEY_SHIFT);
+  t.Emit(KEY_G);
+  t.ReleaseModifier(MODIFIERKEY_SHIFT);
+  t.Emit(KEY_Y);
+  t.Emit(KEY_G);
+  t.Emit(KEY_G);
 
   puts("> 3yy");
-  assert(t.Emit(KEY_3) == false);
-  assert(t.Emit(KEY_Y) == false);
-  assert(t.Emit(KEY_Y) == false);
+  t.Emit(KEY_3);
+  t.Emit(KEY_Y);
+  t.Emit(KEY_Y);
 
   puts("> 3y2k");
-  assert(t.Emit(KEY_3) == false);
-  assert(t.Emit(KEY_Y) == false);
-  assert(t.Emit(KEY_2) == false);
-  assert(t.Emit(KEY_K) == false);
+  t.Emit(KEY_3);
+  t.Emit(KEY_Y);
+  t.Emit(KEY_2);
+  t.Emit(KEY_K);
 
   puts("> 2p");
-  assert(t.Emit(KEY_2) == false);
-  assert(t.Emit(KEY_P) == false);
+  t.Emit(KEY_2);
+  t.Emit(KEY_P);
 
   puts("> P");
-  assert(t.PressModifier(MODIFIERKEY_SHIFT) == false);
-  assert(t.Emit(KEY_P) == false);
-  assert(t.ReleaseModifier(MODIFIERKEY_SHIFT) == false);
+  t.PressModifier(MODIFIERKEY_SHIFT);
+  t.Emit(KEY_P);
+  t.ReleaseModifier(MODIFIERKEY_SHIFT);
 
   puts("> 3y2 esc");
-  assert(t.Emit(KEY_3) == false);
-  assert(t.Emit(KEY_Y) == false);
-  assert(t.Emit(KEY_2) == false);
-  assert(t.Emit(KEY_ESC) == false);
+  t.Emit(KEY_3);
+  t.Emit(KEY_Y);
+  t.Emit(KEY_2);
+  t.Emit(KEY_ESC);
 
   puts("> C");
-  assert(t.PressModifier(MODIFIERKEY_SHIFT) == false);
-  assert(t.Emit(KEY_C) == true);
-  assert(t.ReleaseModifier(MODIFIERKEY_SHIFT) == false);
+  t.PressModifier(MODIFIERKEY_SHIFT);
+  t.Emit(KEY_C);
+  t.ReleaseModifier(MODIFIERKEY_SHIFT);
 
   puts("> spc bks");
-  assert(t.Emit(KEY_SPACE) == false);
-  assert(t.Emit(KEY_BACKSPACE) == false);
+  t.Emit(KEY_SPACE);
+  t.Emit(KEY_BACKSPACE);
 }
 
 void test_repetition() {
@@ -137,36 +131,36 @@ void test_repetition() {
   t.clock().set_time(1000);
 
   puts("> j*");
-  assert(t.Press(KEY_J) == false);
+  t.Press(KEY_J);
   t.clock().set_time(1001);
-  assert(t.Press(KEY_J) == false);
+  t.Press(KEY_J);
   t.clock().set_time(1002);
-  assert(t.Press(KEY_J) == false);
+  t.Press(KEY_J);
   t.clock().set_time(2000);
-  assert(t.Press(KEY_J) == false);
+  t.Press(KEY_J);
   t.clock().set_time(2001);
-  assert(t.Press(KEY_J) == false);
+  t.Press(KEY_J);
   t.clock().set_time(2100);
-  assert(t.Press(KEY_J) == false);
-  assert(t.Release(KEY_J) == false);
+  t.Press(KEY_J);
+  t.Release(KEY_J);
 
   puts("> j* time wrapped");
   t.clock().set_time(-10);
-  assert(t.Press(KEY_J) == false);
+  t.Press(KEY_J);
   t.clock().set_time(10);
-  assert(t.Press(KEY_J) == false);
+  t.Press(KEY_J);
   t.clock().set_time(1000);
-  assert(t.Press(KEY_J) == false);
+  t.Press(KEY_J);
 
   puts("> j*k");
   t.clock().set_time(-10);
-  assert(t.Press(KEY_J) == false);
+  t.Press(KEY_J);
   t.clock().set_time(10000);
-  assert(t.Press(KEY_J) == false);
+  t.Press(KEY_J);
   t.clock().set_time(20000);
-  assert(t.Press(KEY_K) == false);
+  t.Press(KEY_K);
   t.clock().set_time(20010);
-  assert(t.Press(KEY_K) == false);
+  t.Press(KEY_K);
 }
 
 int main() {

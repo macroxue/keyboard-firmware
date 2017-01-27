@@ -15,7 +15,7 @@ class Translator {
     // sent. Call the sender directly to avoid buffering too many events.
     // Returns true if the caller should exit the converter layer after the
     // input.
-    virtual bool Input(Events events, Sender* sender) = 0;
+    virtual void Input(Events events, Sender* sender) = 0;
 
     virtual void AutoRepeat() = 0;
 };

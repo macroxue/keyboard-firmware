@@ -16,10 +16,15 @@ class ViTranslator : public Translator {
 
     const char* name() const { return "vi"; }
 
-    bool Input(Events events, Sender* sender) override {
+    void Input(Events events, Sender* sender) override {
       // TODO(hanhong): Send button events directly.
       sender_ = sender;
-      exit_layer_ = false;
+
+      // If paused, send events directly unless Esc is there.
+      if (paused_ && !IsEscaped(events)) {
+        sender->Send(events);
+        return;
+      }
       bool shifted = IsShifted(events);
       unsigned now = clock_->Milliseconds();
       for (int i = 0; i < kMaxEvents; ++i) {
@@ -38,16 +43,13 @@ class ViTranslator : public Translator {
           event.repeated = old_event.repeated;
         }
       }
-      if (exit_layer_) {
-        command_.Reset();
-        in_events_.Reset();
-      } else {
-        in_events_ = events;
-      }
-      return exit_layer_;
+      if (paused_) in_events_.Reset();
+      else in_events_ = events;
     }
 
     void AutoRepeat() override {
+      if (paused_) return;
+
       bool shifted = IsShifted(in_events_);
       unsigned now = clock_->Milliseconds();
       for (int i = 0; i < kMaxEvents; ++i) {
@@ -64,16 +66,38 @@ class ViTranslator : public Translator {
     }
 
   private:
+    bool IsEscaped(const Events& events) const {
+      for (int i = 0; i < kMaxEvents; ++i)
+        if (events.keys[i].key == KEY_ESC) return true;
+      return false;
+    }
+
     bool IsShifted(const Events& events) const {
-      return (events.modifiers & MODIFIERKEY_SHIFT) ||
-        (events.modifiers & MODIFIERKEY_LEFT_SHIFT) ||
-        (events.modifiers & MODIFIERKEY_RIGHT_SHIFT);
+      auto modifiers = events.modifiers & ~0xE000;
+      return (modifiers & MODIFIERKEY_SHIFT) ||
+        (modifiers & MODIFIERKEY_LEFT_SHIFT) ||
+        (modifiers & MODIFIERKEY_RIGHT_SHIFT);
+    }
+
+    bool IsControlled(const Events& events) const {
+      auto modifiers = events.modifiers & ~0xE000;
+      return (modifiers & MODIFIERKEY_CTRL) ||
+        (modifiers & MODIFIERKEY_LEFT_CTRL) ||
+        (modifiers & MODIFIERKEY_RIGHT_CTRL);
+    }
+
+    bool IsAlted(const Events& events) const {
+      auto modifiers = events.modifiers & ~0xE000;
+      return (modifiers & MODIFIERKEY_ALT) ||
+        (modifiers & MODIFIERKEY_LEFT_ALT) ||
+        (modifiers & MODIFIERKEY_RIGHT_ALT);
     }
 
     void SendKey(int key_code, bool shifted) {
       // Escape resets the command.
       if (key_code == KEY_ESC) {
         command_.Reset();
+        paused_ = false;
         return;
       }
 
@@ -203,7 +227,7 @@ class ViTranslator : public Translator {
     }
 
     void Insert() {
-      exit_layer_ = true;
+      paused_ = true;
     }
 
     void Append() {
@@ -369,7 +393,7 @@ class ViTranslator : public Translator {
     Sender* sender_ = nullptr;
     Events in_events_;
     Events out_events_;
-    bool exit_layer_ = false;
+    bool paused_ = false;
 };
 
 #endif
