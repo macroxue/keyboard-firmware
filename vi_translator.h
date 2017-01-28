@@ -174,6 +174,7 @@ class ViTranslator : public Translator {
         case 'I': StartOfLine(); Insert(); break;
         case 'a': Append(); break;
         case 'A': EndOfLine(); Insert(); break;
+        case 'J': JoinLines(command.count); break;
         case 'r': ReplaceByCharacter(command.count, command.character); break;
         case 's': Substitute(command.count); break;
         case 'S': Change(command.count, true, command.motion); break;
@@ -181,7 +182,7 @@ class ViTranslator : public Translator {
         case 'O': OpenLineAbove(); break;
         case 'u': Undo(command.count); break;
         case 'U': Redo(command.count); break;  // different from vi
-        case 'p': Paste(command.count); break;
+        case 'p': PasteAfter(command.count); break;
         case 'P': PasteBefore(command.count); break;
         case 'x': Delete(1, false, ViMotion(command.count, 'l')); break;
         case 'X': Delete(1, false, ViMotion(command.count, 'h')); break;
@@ -238,6 +239,15 @@ class ViTranslator : public Translator {
       Insert();
     }
 
+    void JoinLines(int count) {
+      count -= (count > 1);
+      for (int i = 0; i < count; ++i) {
+        EndOfLine();
+        Delete();
+        Emit(KEY_SPACE);
+      }
+    }
+
     void ReplaceByCharacter(int count, char character) {
       Select(1, ViMotion{count,'l'});
       char message[2] = {character, 0};
@@ -265,7 +275,7 @@ class ViTranslator : public Translator {
       Insert();
     }
 
-    void Paste(int count) {
+    void PasteAfter(int count) {
       if (copy_by_line_) EndOfLine();
       for (int i = 0; i < count; ++i) {
         if (copy_by_line_) NewLine();
@@ -353,6 +363,7 @@ class ViTranslator : public Translator {
     void Right() { Emit(KEY_RIGHT); }
     void Up() { Emit(KEY_UP); }
     void Down() { Emit(KEY_DOWN); }
+    void Delete() { Emit(KEY_DELETE); }
     void StartOfLine() { Emit(KEY_HOME); }
     void EndOfLine() { Emit(KEY_END); }
     void PageUp() { Emit(KEY_PAGE_UP); }

@@ -4,9 +4,9 @@
 #include <ctype.h>
 #include <string.h>
 
-constexpr char kSimpleActions[] = "iIaArsSoOuUpPxXCDY";
+constexpr char kSimpleActions[] = "iIaAJrsSoOuUpPxXCDY";
 constexpr char kCompoundActions[] = "cdy";
-constexpr char kMotions[] = "hjJklwbe${}\b gG[]";
+constexpr char kMotions[] = "hjklwbe${}\b gG[]";
 constexpr char kGoMotions[] = "gtT";
 
 struct ViMotion {

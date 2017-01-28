@@ -18,7 +18,7 @@ class FakeSender : public Sender {
 
         int ch;
         for (ch = 0; ch < 256 && key_map[ch] != events.keys[i].key; ++ch);
-        if (32 <= ch && ch <= 127) putchar(ch);
+        if (33 <= ch && ch <= 127) putchar(ch);
         else {
           switch (ch) {
             case ent: printf("ent"); break;
