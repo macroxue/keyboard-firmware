@@ -278,6 +278,7 @@ class ViTranslator : public Translator {
 
     void PasteAfter(int count) {
       if (copy_by_line_) EndOfLine();
+      else Right();
       for (int i = 0; i < count; ++i) {
         if (copy_by_line_) NewLine();
         Paste();
@@ -321,6 +322,7 @@ class ViTranslator : public Translator {
       else Select(count, motion);
       Copy();
       Emit(KEY_DELETE);
+      if (copy_by_line_) Emit(KEY_DELETE);
     }
 
     void DeleteToEndOfLine() {
