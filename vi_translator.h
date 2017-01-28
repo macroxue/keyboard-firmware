@@ -174,6 +174,7 @@ class ViTranslator : public Translator {
         case 'I': StartOfLine(); Insert(); break;
         case 'a': Append(); break;
         case 'A': EndOfLine(); Insert(); break;
+        case 'r': ReplaceByCharacter(command.count, command.character); break;
         case 's': Substitute(command.count); break;
         case 'S': Change(command.count, true, command.motion); break;
         case 'o': OpenLine(); break;
@@ -235,6 +236,14 @@ class ViTranslator : public Translator {
     void Append() {
       Right();
       Insert();
+    }
+
+    void ReplaceByCharacter(int count, char character) {
+      Select(1, ViMotion{count,'l'});
+      char message[2] = {character, 0};
+      for (int i = 0; i < count; ++i) {
+        sender_->Send(message);
+      }
     }
 
     void Substitute(int count) {

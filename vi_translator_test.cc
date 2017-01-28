@@ -58,20 +58,25 @@ void test_commands() {
   t.Emit(KEY_0);
   puts("> i");
   t.Emit(KEY_I);
+  t.Emit(KEY_ESC);
   puts("> a");
   t.Emit(KEY_A);
+  t.Emit(KEY_ESC);
   puts("> o");
   t.Emit(KEY_O);
+  t.Emit(KEY_ESC);
 
   puts("> 3s");
   t.Emit(KEY_3);
   t.Emit(KEY_S);
+  t.Emit(KEY_ESC);
 
   puts("> 2c3h");
   t.Emit(KEY_2);
   t.Emit(KEY_C);
   t.Emit(KEY_3);
   t.Emit(KEY_H);
+  t.Emit(KEY_ESC);
 
   puts("> 2dd");
   t.Emit(KEY_2);
@@ -120,10 +125,19 @@ void test_commands() {
   t.PressModifier(MODIFIERKEY_SHIFT);
   t.Emit(KEY_C);
   t.ReleaseModifier(MODIFIERKEY_SHIFT);
+  t.Emit(KEY_ESC);
 
   puts("> spc bks");
   t.Emit(KEY_SPACE);
   t.Emit(KEY_BACKSPACE);
+
+  puts("> 2r@");
+  t.Emit(KEY_2);
+  t.Emit(KEY_R);
+  t.PressModifier(MODIFIERKEY_SHIFT);
+  t.Emit(KEY_2);
+  t.ReleaseModifier(MODIFIERKEY_SHIFT);
+  puts("");
 }
 
 void test_repetition() {

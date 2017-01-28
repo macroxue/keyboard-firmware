@@ -21,12 +21,18 @@ int main() {
 
   for (char action : kSimpleActions) {
     if (!action) break;
-    c.Add(action);
-    Expect(c, 1, action, false, 0, 0, 0, true, __LINE__);
-    c.Add("10").Add(action);
-    Expect(c, 10, action, false, 0, 0, 0, true, __LINE__);
-    c.Add("567").Add(action);
-    Expect(c, 56, action, false, 0, 0, 0, true, __LINE__);
+    if (action == 'r') {
+      c.Add("34").Add(action).Add('5');
+      Expect(c, 34, action, false, 0, 0, 0, true, __LINE__);
+      assert(c.character == '5');
+    } else {
+      c.Add(action);
+      Expect(c, 1, action, false, 0, 0, 0, true, __LINE__);
+      c.Add("10").Add(action);
+      Expect(c, 10, action, false, 0, 0, 0, true, __LINE__);
+      c.Add("567").Add(action);
+      Expect(c, 56, action, false, 0, 0, 0, true, __LINE__);
+    }
   }
 
   c.Add("0");

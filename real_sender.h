@@ -36,6 +36,8 @@ class RealSender : public Sender {
       }
     }
 
+    void Send(const char* message) override { Keyboard.print(message); }
+
   private:
     bool IsMediaKey(int key) const {
       return KEY_MEDIA_PLAY <= key && key <= KEY_MEDIA_VOLUME_DEC;

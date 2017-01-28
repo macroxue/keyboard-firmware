@@ -43,6 +43,8 @@ class FakeSender : public Sender {
       events_ = events;
     }
 
+    void Send(const char* message) override { printf("%s", message); }
+
     Events events() const { return events_; }
 
   private:

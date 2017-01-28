@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include <string.h>
 
-constexpr char kSimpleActions[] = "iIaAsSoOuUpPxXCDY";
+constexpr char kSimpleActions[] = "iIaArsSoOuUpPxXCDY";
 constexpr char kCompoundActions[] = "cdy";
 constexpr char kMotions[] = "hjJklwbe${}\b gG[]";
 constexpr char kGoMotions[] = "gtT";
@@ -34,7 +34,10 @@ struct ViCommand {
   ViCommand& Add(int key) {
     if (completed) Reset();
 
-    if (key == '0' && !count && !action && !motion.count) {
+    if (action == 'r') {
+      character = key;
+      Complete();
+    } else if (key == '0' && !count && !action && !motion.count) {
       motion.move = key;
       Complete();
     } else if (isdigit(key)) {
@@ -48,7 +51,7 @@ struct ViCommand {
     } else if (strchr(kSimpleActions, key)) {
       if (!action) {
         action = key;
-        Complete();
+        if (action != 'r') Complete();
       } else {
         Reset();
       }
@@ -97,6 +100,7 @@ struct ViCommand {
   int count = 0;
   char action = 0;
   bool doubled = false;
+  char character = 0;  // for 'r' command
   ViMotion motion;
   bool completed = false;
 };
