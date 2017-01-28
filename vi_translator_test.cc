@@ -161,6 +161,13 @@ void test_commands() {
   t.PressModifier(MODIFIERKEY_SHIFT);
   t.Emit(KEY_J);
   t.ReleaseModifier(MODIFIERKEY_SHIFT);
+
+  puts("> /abc");
+  t.Emit(KEY_SLASH);
+  t.Emit(KEY_A);
+  t.Emit(KEY_B);
+  t.Emit(KEY_C);
+  t.Emit(KEY_ESC);
 }
 
 void test_repetition() {

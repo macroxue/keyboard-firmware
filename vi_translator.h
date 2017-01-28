@@ -192,6 +192,7 @@ class ViTranslator : public Translator {
         case 'D': DeleteToEndOfLine(); break;
         case 'y': Yank(command.count, command.doubled, command.motion); break;
         case 'Y': Yank(command.count, true, command.motion); break;
+        case '/': Find(); Insert(); break;
         default: return false;
       }
       return true;
@@ -377,6 +378,7 @@ class ViTranslator : public Translator {
 
     // Special
     void NewLine() { Emit(KEY_ENTER); }
+    void Find() { Emit(MODIFIERKEY_CTRL, KEY_F); }
     void Copy() { Emit(MODIFIERKEY_CTRL, KEY_C); }
     void Paste() { Emit(MODIFIERKEY_CTRL, KEY_V); }
     void Undo() { Emit(MODIFIERKEY_CTRL, KEY_Z); }

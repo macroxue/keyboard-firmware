@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include <string.h>
 
-constexpr char kSimpleActions[] = "iIaAJrsSoOuUpPxXCDY";
+constexpr char kSimpleActions[] = "iIaAJrsSoOuUpPxXCDY/";
 constexpr char kCompoundActions[] = "cdy";
 constexpr char kMotions[] = "hjklwbe${}\b gG[]";
 constexpr char kGoMotions[] = "gtT";
