@@ -3,11 +3,11 @@
 #include "real_scanner.h"
 #include "real_sender.h"
 
-// Include one and only one keyboard below.
-//#include "left_split.h"
-//#include "right_split.h"
-//#include "geng_yun.h"
-#include "geng_yun_vi.h"
+// Include one and only one layout below.
+//#include "layouts/left_split.h"
+//#include "layouts/right_split.h"
+//#include "layouts/geng_yun.h"
+#include "layouts/geng_yun_vi.h"
 
 RealScanner<R,C> scanner(row_pins, col_pins);
 RealSender sender;

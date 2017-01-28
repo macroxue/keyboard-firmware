@@ -6,37 +6,39 @@
 #endif
 #include "keylayouts.h"
 
+// Be aware. The enum below doesn't include keys like '!' and '{' because they
+// are shift-'1' and shift-'[' respectively.
 enum KeyCode : unsigned char {
-  bks = 8,
-  tab = 9,
-  ent = 13,
-  esc = 27,
+  bks = 8,   // backspace
+  tab = 9,   // tab
+  ent = 13,  // enter
+  esc = 27,  // escape
   spc = 32,  // or just ' '
 
-  ctl = 128,
-  shf,
-  alt,
-  gui,
-  lct,
-  lsh,
-  lal,
-  lgu,
-  rct,
-  rsh,
-  ral,
-  rgu,
+  ctl = 128, // control
+  shf,       // shift
+  alt,       // alt
+  gui,       // windows
+  lct,       // left control
+  lsh,       // left shift
+  lal,       // left alt
+  lgu,       // left windows
+  rct,       // right windows
+  rsh,       // right shift
+  ral,       // right alt
+  rgu,       // right windows
 
-  up = 140,
-  dn,
-  lt,
-  rt,
-  hom,
-  end,
-  pgu,
-  pgd,
-  ins,
-  del,
-  cap,
+  up = 140,  // up
+  dn,        // down
+  lt,        // left
+  rt,        // right
+  hom,       // home
+  end,       // end
+  pgu,       // page up
+  pgd,       // page down
+  ins,       // insert
+  del,       // delete
+  cap,       // capslock
 
   f1 = 151,
   f2,
@@ -54,36 +56,36 @@ enum KeyCode : unsigned char {
   f14,
   f15,
 
-  mnu = 166,  // menu
-  prt,  // print screen
+  mnu = 166,  // menu/application
+  prt,        // print screen
 
   mlc = 171,  // mouse left click
-  mmc,  // mouse middle click
-  mrc,  // mouse right click
-  mdc,  // mouse double click
-  msu,  // mouse scroll up
-  msd,  // mouse scroll down
+  mmc,        // mouse middle click
+  mrc,        // mouse right click
+  mdc,        // mouse double click
+  msu,        // mouse scroll up
+  msd,        // mouse scroll down
 
   pdn = 181,  // system power down
-  slp,  // system sleep
-  wak,  // system wake up
-  ply,  // play
-  pau,  // pause
-  rec,  // record
-  ffw,  // fast forward
-  rew,  // rewind
-  ntk,  // next track
-  ptk,  // previous track
-  stp,  // stop
-  ejt,  // eject
-  rpl,  // random play
-  ppa,  // play pause
-  psk,  // play skip
-  mut,  // mute
-  vup,  // volume up
-  vdn,  // volume down
+  slp,        // system sleep
+  wak,        // system wake up
+  ply,        // play
+  pau,        // pause
+  rec,        // record
+  ffw,        // fast forward
+  rew,        // rewind
+  ntk,        // next track
+  ptk,        // previous track
+  stp,        // stop
+  ejt,        // eject
+  rpl,        // random play
+  ppa,        // play pause
+  psk,        // play skip
+  mut,        // mute
+  vup,        // volume up
+  vdn,        // volume down
 
-  l0 = 240,  // layer 0
+  l0 = 240,   // layer 0
   l1,
   l2,
   l3,
@@ -92,10 +94,10 @@ enum KeyCode : unsigned char {
   l6,
   l7,
   l8,
-  l9,  // layer 9
+  l9,         // layer 9
 
   fnl = 254,  // lock to fn layer
-  fn  // shift to fn layer
+  fn          // shift to fn layer
 };
 
 static const int key_map[256] = {
