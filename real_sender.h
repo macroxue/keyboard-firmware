@@ -37,6 +37,7 @@ class RealSender : public Sender {
     }
 
     void Send(const char* message) override { Keyboard.print(message); }
+    void Delay(int ms) override { delay(ms); }
 
   private:
     bool IsMediaKey(int key) const {

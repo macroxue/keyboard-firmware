@@ -8,6 +8,7 @@ class Sender {
     virtual ~Sender() {}
     virtual void Send(const Events& events) = 0;
     virtual void Send(const char* message) = 0;
+    virtual void Delay(int ms) = 0;
 };
 
 #endif

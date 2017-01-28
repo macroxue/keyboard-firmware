@@ -20,8 +20,8 @@ class ViTranslator : public Translator {
       // TODO(hanhong): Send button events directly.
       sender_ = sender;
 
-      // If paused, send events directly unless Esc is there.
-      if (paused_ && !IsEscaped(events)) {
+      // If in insert mode, send events directly unless Esc is there.
+      if (insert_mode_ && !IsEscaped(events)) {
         sender->Send(events);
         return;
       }
@@ -43,12 +43,12 @@ class ViTranslator : public Translator {
           event.repeated = old_event.repeated;
         }
       }
-      if (paused_) in_events_.Reset();
+      if (insert_mode_) in_events_.Reset();
       else in_events_ = events;
     }
 
     void AutoRepeat() override {
-      if (paused_) return;
+      if (insert_mode_) return;
 
       bool shifted = IsShifted(in_events_);
       unsigned now = clock_->Milliseconds();
@@ -97,7 +97,7 @@ class ViTranslator : public Translator {
       // Escape resets the command.
       if (key_code == KEY_ESC) {
         command_.Reset();
-        paused_ = false;
+        insert_mode_ = false;
         return;
       }
 
@@ -232,7 +232,7 @@ class ViTranslator : public Translator {
     }
 
     void Insert() {
-      paused_ = true;
+      insert_mode_ = true;
     }
 
     void Append() {
@@ -285,10 +285,13 @@ class ViTranslator : public Translator {
     }
 
     void PasteBefore(int count) {
-      if (copy_by_line_) StartOfLine();
       for (int i = 0; i < count; ++i) {
+        if (copy_by_line_) {
+          StartOfLine();
+          NewLine();
+          Up();
+        }
         Paste();
-        if (copy_by_line_) NewLine();
       }
     }
 
@@ -394,8 +397,10 @@ class ViTranslator : public Translator {
     void Emit(int key) {
       // Only one key at a time.
       out_events_.keys[0].key = key;
+      sender_->Delay(kDelayMs);
       sender_->Send(out_events_);
       out_events_.keys[0].key = 0;
+      sender_->Delay(kDelayMs);
       sender_->Send(out_events_);
     }
     void Emit(int modifier, int key) {
@@ -405,13 +410,16 @@ class ViTranslator : public Translator {
     }
     void PressModifier(int modifier) {
       out_events_.modifiers |= modifier;
+      sender_->Delay(kDelayMs);
       sender_->Send(out_events_);
     }
     void ReleaseModifier(int modifier) {
       out_events_.modifiers &= ~modifier;
+      sender_->Delay(kDelayMs);
       sender_->Send(out_events_);
     }
 
+    static const int kDelayMs = 10;
     ViCommand command_;
     bool copy_by_line_ = false;
 
@@ -419,7 +427,7 @@ class ViTranslator : public Translator {
     Sender* sender_ = nullptr;
     Events in_events_;
     Events out_events_;
-    bool paused_ = false;
+    bool insert_mode_ = false;
 };
 
 #endif

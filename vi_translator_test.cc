@@ -110,7 +110,8 @@ void test_commands() {
   t.Emit(KEY_2);
   t.Emit(KEY_P);
 
-  puts("> P");
+  puts("> 2P");
+  t.Emit(KEY_2);
   t.PressModifier(MODIFIERKEY_SHIFT);
   t.Emit(KEY_P);
   t.ReleaseModifier(MODIFIERKEY_SHIFT);
@@ -138,12 +139,6 @@ void test_commands() {
   t.Emit(KEY_2);
   t.ReleaseModifier(MODIFIERKEY_SHIFT);
   puts("");
-
-  puts("> YP");
-  t.PressModifier(MODIFIERKEY_SHIFT);
-  t.Emit(KEY_Y);
-  t.Emit(KEY_P);
-  t.ReleaseModifier(MODIFIERKEY_SHIFT);
 
   puts("> J");
   t.PressModifier(MODIFIERKEY_SHIFT);

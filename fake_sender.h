@@ -44,6 +44,7 @@ class FakeSender : public Sender {
     }
 
     void Send(const char* message) override { printf("%s", message); }
+    void Delay(int ms) override {}
 
     Events events() const { return events_; }
 
