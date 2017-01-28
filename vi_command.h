@@ -6,7 +6,7 @@
 
 constexpr char kSimpleActions[] = "iIaAsSoOuUpPxXCDY";
 constexpr char kCompoundActions[] = "cdy";
-constexpr char kMotions[] = "hjJklwbe$\b gG[]";
+constexpr char kMotions[] = "hjJklwbe${}\b gG[]";
 constexpr char kGoMotions[] = "gtT";
 
 struct ViMotion {

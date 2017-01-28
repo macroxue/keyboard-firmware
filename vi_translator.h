@@ -207,6 +207,8 @@ class ViTranslator : public Translator {
           case 'e': NextEndOfWord(); break;
           case '0': StartOfLine(); break;
           case '$': EndOfLine(); break;
+          case '{': PrevParagraph(); break;
+          case '}': NextParagraph(); break;
           case '\b': PageUp(); break;
           case ' ': PageDown(); break;
           case 'g':
@@ -359,6 +361,8 @@ class ViTranslator : public Translator {
     void Paste() { Emit(MODIFIERKEY_CTRL, KEY_V); }
     void Undo() { Emit(MODIFIERKEY_CTRL, KEY_Z); }
     void Redo() { Emit(MODIFIERKEY_CTRL, KEY_Y); }
+    void PrevParagraph() { Emit(MODIFIERKEY_CTRL, KEY_UP); }
+    void NextParagraph() { Emit(MODIFIERKEY_CTRL, KEY_DOWN); }
     void PrevPage() { Emit(MODIFIERKEY_ALT, KEY_LEFT); }
     void NextPage() { Emit(MODIFIERKEY_ALT, KEY_RIGHT); }
     void PrevTab() { Emit(MODIFIERKEY_CTRL, KEY_PAGE_UP); }
