@@ -6,8 +6,8 @@
 
 constexpr char kSimpleActions[] = "iIaAJrsSoOuUpPxXCDY/";
 constexpr char kCompoundActions[] = "cdy";
-constexpr char kMotions[] = "hjklwbe${}\b gG[]";
-constexpr char kGoMotions[] = "gtT";
+constexpr char kSimpleMotions[] = "hjklwbe${}\b G[]";
+constexpr char kCompoundMotions[] = "gfFtT";
 
 struct ViMotion {
   ViMotion() { Reset(); }
@@ -37,6 +37,9 @@ struct ViCommand {
     if (action == 'r') {
       character = key;
       Complete();
+    } else if (motion.move && strchr(kCompoundMotions, motion.move)) {
+      motion.go = key;
+      Complete();
     } else if (key == '0' && !count && !motion.count) {
       motion.move = key;
       Complete();
@@ -64,18 +67,19 @@ struct ViCommand {
       } else {
         Reset();
       }
-    } else if (strchr(kMotions, key) && !motion.move) {
+    } else if (strchr(kSimpleMotions, key) && !motion.move) {
       if (!action) {
         motion.count = count;
         count = 0;
       }
       motion.move = key;
-      if (motion.move != 'g') {
-        Complete();
-      }
-    } else if (strchr(kGoMotions, key) && motion.move == 'g') {
-      motion.go = key;
       Complete();
+    } else if (strchr(kCompoundMotions, key) && !motion.move) {
+      if (!action) {
+        motion.count = count;
+        count = 0;
+      }
+      motion.move = key;
     } else
       Reset();
     return *this;

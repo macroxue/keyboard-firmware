@@ -5,6 +5,8 @@ class FakeSender : public Sender {
   public:
     void Send(const Events& events) override {
       auto modifiers = events.modifiers & ~0xE000;
+      bool key_pressed = (modifiers != 0);
+
       if (modifiers & MODIFIERKEY_LEFT_CTRL) printf("lC-");
       if (modifiers & MODIFIERKEY_LEFT_SHIFT) printf("lS-");
       if (modifiers & MODIFIERKEY_LEFT_ALT) printf("lA-");
@@ -15,6 +17,7 @@ class FakeSender : public Sender {
       if (modifiers & MODIFIERKEY_RIGHT_GUI) printf("rG-");
       for (int i = 0; i < kMaxEvents; ++i) {
         if (events.keys[i].key == 0) continue;
+        key_pressed = true;
 
         int ch;
         for (ch = 0; ch < 256 && key_map[ch] != events.keys[i].key; ++ch);
@@ -38,12 +41,12 @@ class FakeSender : public Sender {
           }
         }
       }
-      putchar('\n');
+      if (key_pressed) putchar('\n');
 
       events_ = events;
     }
 
-    void Send(const char* message) override { printf("%s", message); }
+    void Send(const char* message) override { puts(message); }
     void Delay(int ms) override {}
 
     Events events() const { return events_; }

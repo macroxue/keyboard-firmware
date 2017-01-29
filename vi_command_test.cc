@@ -40,22 +40,20 @@ int main() {
   c.Add("d0");
   Expect(c, 1, 'd', false, 1, '0', 0, true, __LINE__);
 
-  for (char move : kMotions) {
+  for (char move : kSimpleMotions) {
     if (!move) break;
-    if (move != 'g') {
-      c.Add(move);
-      Expect(c, 0, 0, false, 1, move, 0, true, __LINE__);
-      c.Add("10").Add(move);
-      Expect(c, 0, 0, false, 10, move, 0, true, __LINE__);
-      c.Add("567").Add(move);
-      Expect(c, 0, 0, false, 56, move, 0, true, __LINE__);
-    } else {
-      for (char go : kGoMotions) {
-        if (!go) break;
-        c.Add("567").Add(move).Add(go);
-        Expect(c, 0, 0, false, 56, move, go, true, __LINE__);
-      }
-    }
+    c.Add(move);
+    Expect(c, 0, 0, false, 1, move, 0, true, __LINE__);
+    c.Add("10").Add(move);
+    Expect(c, 0, 0, false, 10, move, 0, true, __LINE__);
+    c.Add("567").Add(move);
+    Expect(c, 0, 0, false, 56, move, 0, true, __LINE__);
+  }
+
+  for (char move : kCompoundMotions) {
+    if (!move) break;
+    c.Add("56").Add(move).Add('z');
+    Expect(c, 0, 0, false, 56, move, 'z', true, __LINE__);
   }
 
   for (char action : kCompoundActions) {
@@ -67,24 +65,21 @@ int main() {
     c.Add("20").Add(action).Add(action);
     Expect(c, 20, action, true, 0, 0, 0, true, __LINE__);
 
-    for (char move : kMotions) {
+    for (char move : kSimpleMotions) {
       if (!move) break;
-      if (move != 'g') {
-        c.Add(action).Add(move);
-        Expect(c, 1, action, false, 1, move, 0, true, __LINE__);
-        c.Add("5").Add(action).Add(move);
-        Expect(c, 5, action, false, 1, move, 0, true, __LINE__);
-        c.Add(action).Add("50").Add(move);
-        Expect(c, 1, action, false, 50, move, 0, true, __LINE__);
-        c.Add("987").Add(action).Add("71").Add(move);
-        Expect(c, 98, action, false, 71, move, 0, true, __LINE__);
-      } else {
-        for (char go : kGoMotions) {
-          if (!go) break;
-          c.Add("987").Add(action).Add("71").Add(move).Add(go);
-          Expect(c, 98, action, false, 71, move, go, true, __LINE__);
-        }
-      }
+      c.Add(action).Add(move);
+      Expect(c, 1, action, false, 1, move, 0, true, __LINE__);
+      c.Add("5").Add(action).Add(move);
+      Expect(c, 5, action, false, 1, move, 0, true, __LINE__);
+      c.Add(action).Add("50").Add(move);
+      Expect(c, 1, action, false, 50, move, 0, true, __LINE__);
+      c.Add("987").Add(action).Add("71").Add(move);
+      Expect(c, 98, action, false, 71, move, 0, true, __LINE__);
+    }
+    for (char move : kCompoundMotions) {
+      if (!move) break;
+      c.Add("987").Add(action).Add("71").Add(move).Add('0');
+      Expect(c, 98, action, false, 71, move, '0', true, __LINE__);
     }
   }
 
@@ -92,7 +87,7 @@ int main() {
   Expect(c, 0, 0, false, 0, 0, 0, false, __LINE__);
   c.Add("5q");
   Expect(c, 0, 0, false, 0, 0, 0, false, __LINE__);
-  c.Add("c2f");
+  c.Add("c2r");
   Expect(c, 0, 0, false, 0, 0, 0, false, __LINE__);
   c.Add("3yx");
   Expect(c, 0, 0, false, 0, 0, 0, false, __LINE__);

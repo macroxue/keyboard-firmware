@@ -18,9 +18,9 @@ Layer<R,C> layers[] = {
       {   0,  f1,  f2,  f3,  f4,  f5,  f6,  f7,  f8,  f9, f10, f11, f12,   0 },
       { esc, '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0','\\', del },
       { tab, '=', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']' },
-      { fnl, '-', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';','\'', ent },
+      { lct, '-', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';','\'', ent },
       {   0, lsh, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', rsh,   0 },
-      {  l0, lgu,   0, lct,   0, lal, bks, spc, ral,   0, rct,   0, mnu,  l2 },
+      {  l0, lgu,   0, lct,   0, lal, bks, spc, ral,   0, rct,   0,  l1,  l2 },
     }
   },
   { "vi-emu",  // name of this layer
@@ -31,9 +31,9 @@ Layer<R,C> layers[] = {
       {   0,  f1,  f2,  f3,  f4,  f5,  f6,  f7,  f8,  f9, f10, f11, f12,   0 },
       { esc, '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0','\\', del },
       { tab, '=', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']' },
-      { fnl, '-', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';','\'', ent },
+      { lct, '-', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';','\'', ent },
       {   0, lsh, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', rsh,   0 },
-      {  l0, lgu,   0, lct,   0, lal, bks, spc, ral,   0, rct,   0, mnu,  l2 },
+      {  l0, lgu,   0, lct,   0, lal, bks, spc, ral,   0, rct,   0,  l1,  l2 },
     }
   },
   { "media",
@@ -44,9 +44,9 @@ Layer<R,C> layers[] = {
       {   0,  f1,  f2,  f3,  f4,  f5,  f6,  f7,  f8,  f9, f10, f11, f12,   0 },
       { esc, '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0','\\', del },
       { tab, '=',   0, mut, vdn, vup,   0, mdc, mlc, mmc, mrc,   0, '[', ']' },
-      { fnl, '-', ply, pau, rew, ffw, rec,  lt,  dn,  up,  rt,   0,'\'', ent },
+      { lct, '-', ply, pau, rew, ffw, rec,  lt,  dn,  up,  rt,   0,'\'', ent },
       {   0, lsh,   0, stp, ptk, ntk, ejt, hom, pgd, pgu, end,   0, rsh,   0 },
-      {  l0, lgu,   0, lct,   0, lal, bks, spc, ral,   0, rct,   0, mnu,  l2 },
+      {  l0, lgu,   0, lct,   0, lal, bks, spc, ral,   0, rct,   0,  l1,  l2 },
     }
   },
 };

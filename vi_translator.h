@@ -214,6 +214,10 @@ class ViTranslator : public Translator {
           case '}': NextParagraph(); break;
           case '\b': PageUp(); break;
           case ' ': PageDown(); break;
+          case 'f': FindCharacter(motion.go, true); break;
+          case 'F': FindCharacter(motion.go, false); break;
+          case 't': TillCharacter(motion.go, true); break;
+          case 'T': TillCharacter(motion.go, false); break;
           case 'g':
             switch (motion.go) {
               case 'g': StartOfDoc(); break;
@@ -251,10 +255,7 @@ class ViTranslator : public Translator {
 
     void ReplaceByCharacter(int count, char character) {
       Select(1, ViMotion{count,'l'});
-      char message[2] = {character, 0};
-      for (int i = 0; i < count; ++i) {
-        sender_->Send(message);
-      }
+      for (int i = 0; i < count; ++i) Print(character);
     }
 
     void Substitute(int count) {
@@ -364,6 +365,26 @@ class ViTranslator : public Translator {
       ReleaseModifier(MODIFIERKEY_SHIFT);
     }
 
+    void FindCharacter(char character, bool forward) {
+      Find();
+      Print(character);
+      if (forward) Emit(KEY_ENTER);
+      else Emit(MODIFIERKEY_SHIFT, KEY_ENTER);
+      Emit(KEY_ESC);
+      Right();
+      Left();
+    }
+
+    void TillCharacter(char character, bool forward) {
+      Find();
+      Print(character);
+      if (forward) Emit(KEY_ENTER);
+      else Emit(MODIFIERKEY_SHIFT, KEY_ENTER);
+      Emit(KEY_ESC);
+      if (forward) Left();
+      else Right();
+    }
+
     // Cursor-moving
     void Left() { Emit(KEY_LEFT); }
     void Right() { Emit(KEY_RIGHT); }
@@ -419,6 +440,11 @@ class ViTranslator : public Translator {
       out_events_.modifiers &= ~modifier;
       sender_->Delay(kDelayMs);
       sender_->Send(out_events_);
+    }
+    void Print(char character) {
+      char message[2] = {character, 0};
+      sender_->Delay(kDelayMs);
+      sender_->Send(message);
     }
 
     static const int kDelayMs = 10;

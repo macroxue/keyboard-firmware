@@ -142,7 +142,6 @@ void test_commands() {
   t.PressModifier(MODIFIERKEY_SHIFT);
   t.Emit(KEY_2);
   t.ReleaseModifier(MODIFIERKEY_SHIFT);
-  puts("");
 
   puts("> J");
   t.PressModifier(MODIFIERKEY_SHIFT);
@@ -167,6 +166,22 @@ void test_commands() {
   t.Emit(KEY_B);
   t.Emit(KEY_C);
   t.Emit(KEY_ESC);
+
+  puts("> faFb");
+  t.Emit(KEY_F);
+  t.Emit(KEY_A);
+  t.PressModifier(MODIFIERKEY_SHIFT);
+  t.Emit(KEY_F);
+  t.ReleaseModifier(MODIFIERKEY_SHIFT);
+  t.Emit(KEY_B);
+
+  puts("> taTb");
+  t.Emit(KEY_T);
+  t.Emit(KEY_A);
+  t.PressModifier(MODIFIERKEY_SHIFT);
+  t.Emit(KEY_T);
+  t.ReleaseModifier(MODIFIERKEY_SHIFT);
+  t.Emit(KEY_B);
 }
 
 void test_repetition() {
