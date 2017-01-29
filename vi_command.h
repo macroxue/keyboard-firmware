@@ -37,7 +37,7 @@ struct ViCommand {
     if (action == 'r') {
       character = key;
       Complete();
-    } else if (key == '0' && !count && !action && !motion.count) {
+    } else if (key == '0' && !count && !motion.count) {
       motion.move = key;
       Complete();
     } else if (isdigit(key)) {

@@ -37,6 +37,8 @@ int main() {
 
   c.Add("0");
   Expect(c, 0, 0, false, 1, '0', 0, true, __LINE__);
+  c.Add("d0");
+  Expect(c, 1, 'd', false, 1, '0', 0, true, __LINE__);
 
   for (char move : kMotions) {
     if (!move) break;

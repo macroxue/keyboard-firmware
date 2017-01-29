@@ -87,6 +87,10 @@ void test_commands() {
   t.Emit(KEY_D);
   t.Emit(KEY_K);
 
+  puts("> d0");
+  t.Emit(KEY_D);
+  t.Emit(KEY_0);
+
   puts("> Gygg");
   t.PressModifier(MODIFIERKEY_SHIFT);
   t.Emit(KEY_G);
