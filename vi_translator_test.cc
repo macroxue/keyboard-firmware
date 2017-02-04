@@ -65,6 +65,9 @@ void test_commands() {
   puts("> o");
   t.Emit(KEY_O);
   t.Emit(KEY_ESC);
+  puts("> enter");
+  t.Emit(KEY_ENTER);
+  t.Emit(KEY_ESC);
 
   puts("> 3s");
   t.Emit(KEY_3);

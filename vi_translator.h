@@ -116,6 +116,7 @@ class ViTranslator : public Translator {
       switch (key_code) {
         case KEY_SPACE: return ' ';
         case KEY_BACKSPACE: return '\b';
+        case KEY_ENTER: return '\n';
         case KEY_QUOTE: return shifted ? '"' : '\'';
         case KEY_COMMA: return shifted ? '<' : ',';
         case KEY_MINUS: return shifted ? '_' : '-';
@@ -193,6 +194,7 @@ class ViTranslator : public Translator {
         case 'y': Yank(command.count, command.doubled, command.motion); break;
         case 'Y': Yank(command.count, true, command.motion); break;
         case '/': Find(); Insert(); break;
+        case '\n': Insert(); NewLine(); break;
         default: return false;
       }
       return true;
