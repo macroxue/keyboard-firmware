@@ -68,6 +68,16 @@ void test_commands() {
   puts("> enter");
   t.Emit(KEY_ENTER);
   t.Emit(KEY_ESC);
+  puts("> shift-esc");
+  t.PressModifier(MODIFIERKEY_SHIFT);
+  t.Emit(KEY_ESC);
+  t.ReleaseModifier(MODIFIERKEY_SHIFT);
+  puts("> i shift-esc");
+  t.Emit(KEY_I);
+  t.PressModifier(MODIFIERKEY_SHIFT);
+  t.Emit(KEY_ESC);
+  t.ReleaseModifier(MODIFIERKEY_SHIFT);
+  t.Emit(KEY_ESC);
 
   puts("> 3s");
   t.Emit(KEY_3);

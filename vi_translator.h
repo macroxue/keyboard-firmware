@@ -67,6 +67,7 @@ class ViTranslator : public Translator {
 
   private:
     bool IsEscaped(const Events& events) const {
+      if (events.modifiers) return false;
       for (int i = 0; i < kMaxEvents; ++i)
         if (events.keys[i].key == KEY_ESC) return true;
       return false;
@@ -94,6 +95,11 @@ class ViTranslator : public Translator {
     }
 
     void SendKey(int key_code, bool shifted) {
+      // Shift-Escape sends a real escape, e.g. for closing a dialog.
+      if (key_code == KEY_ESC && shifted) {
+        Escape();
+        return;
+      }
       // Escape resets the command.
       if (key_code == KEY_ESC) {
         command_.Reset();
@@ -406,6 +412,7 @@ class ViTranslator : public Translator {
 
     // Special
     void NewLine() { Emit(KEY_ENTER); }
+    void Escape() { Emit(KEY_ESC); }
     void Find() { Emit(MODIFIERKEY_CTRL, KEY_F); }
     void Copy() { Emit(MODIFIERKEY_CTRL, KEY_C); }
     void Paste() { Emit(MODIFIERKEY_CTRL, KEY_V); }
