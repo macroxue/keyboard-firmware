@@ -71,6 +71,7 @@ class Layout {
         auto new_layer = FindLayer(key);
         if (new_layer != cur_layer_) {
           cur_layer_ = new_layer;
+          fn_pressed_ = false;
         }
         return;
       }
