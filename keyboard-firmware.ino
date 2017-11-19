@@ -7,7 +7,8 @@
 //#include "layouts/left_split.h"
 //#include "layouts/right_split.h"
 //#include "layouts/geng_yun.h"
-#include "layouts/geng_yun_vi.h"
+//#include "layouts/geng_yun_vi.h"
+#include "layouts/so_ho.h"
 
 RealScanner<R,C> scanner(row_pins, col_pins);
 RealSender sender;
