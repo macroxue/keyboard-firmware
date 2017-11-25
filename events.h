@@ -15,6 +15,47 @@ struct Events {
     for (int i = 0; i < kMaxButtons; ++i) buttons[i] = 0;
   }
 
+  void AddTappedKey(int key) {
+    AddPressedKey(key, -1, -1);
+  }
+
+  bool ClearTapping() {
+    bool cleared = false;
+    for (int i = 0; i < kMaxEvents; ++i) {
+      if (keys[i].key && keys[i].row == -1) {
+        keys[i].key = 0;
+        cleared = true;
+      }
+    }
+    return cleared;
+  }
+
+  void AddPressedKey(int key, int row, int col) {
+    for (int i = 0; i < kMaxEvents; ++i) {
+      if (keys[i].key != 0 &&
+          keys[i].row == row && keys[i].col == col) return;
+    }
+    for (int i = 0; i < kMaxEvents; ++i) {
+      if (keys[i].key == 0) {
+        keys[i].key = key;
+        keys[i].row = row;
+        keys[i].col = col;
+        return;
+      }
+    }
+    //Keyboard.print(key);
+  }
+
+  void RemoveReleasedKey(int row, int col) {
+    for (int i = 0; i < kMaxEvents; ++i) {
+      if (keys[i].row == row && keys[i].col == col) {
+        keys[i].key = 0;
+        return;
+      }
+    }
+    //Keyboard.print(-key);
+  }
+
   int modifiers = 0;
   struct {
     int key;

@@ -23,11 +23,13 @@ class Controller {
       auto translator = layout_->translator();
       if (num_entries > 0) {
         Events events = layout_->Interpret(num_entries, entries);
-        if (translator) {
-          translator->Input(events, sender_);
-        } else {
-          sender_->Send(events);
-        }
+        do {
+          if (translator) {
+            translator->Input(events, sender_);
+          } else {
+            sender_->Send(events);
+          }
+        } while (events.ClearTapping());
       } else {
         if (translator) {
           translator->AutoRepeat();

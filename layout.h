@@ -6,6 +6,13 @@
 #include "vi_translator.h"
 
 static const int kMaxLayers = 10;
+static const int kMaxTaps = 8;
+
+// Tapping on a modifier (including fn) results in a regular key.
+struct Tap {
+  unsigned char modifier;
+  unsigned char key;
+};
 
 template <int R, int C>
 struct Layer {
@@ -14,6 +21,7 @@ struct Layer {
   int fn_layer_id;
   const char* translator;
   unsigned char keys[R][C];
+  Tap taps[kMaxTaps];
 };
 
 template <int R, int C>
@@ -26,6 +34,7 @@ class Layout {
     }
 
     Events Interpret(int num_entries, const Entry* entries) {
+      events_.ClearTapping();
       UpdateFnState(num_entries, entries);
       const auto* layer = fn_pressed_ ? FindLayer(cur_layer_->fn_layer_id)
                                       : cur_layer_;
@@ -48,6 +57,8 @@ class Layout {
         int key = key_map[cur_layer_->keys[entries[i].row][entries[i].col]];
         if (key == fn) {
           fn_pressed_ = entries[i].pressed;
+          if (fn_pressed_) tapping_modifier_ = fn;
+          else CheckTapping(fn);
           break;
         }
         if (key == fnl && entries[i].pressed) {
@@ -63,55 +74,53 @@ class Layout {
       }
     }
 
+    void CheckTapping(int modifier) {
+      if (tapping_modifier_ != modifier) return;
+      const auto& taps = cur_layer_->taps;
+      for (int i = 0; i < kMaxTaps; ++i) {
+        if (taps[i].modifier == 0) return;
+        if (key_map[taps[i].modifier] == modifier) {
+          events_.AddTappedKey(key_map[taps[i].key]);
+          tapping_modifier_ = 0;
+          return;
+        }
+      }
+    }
+
     void Interpret(const Entry& entry, const Layer<R,C>* layer) {
       int key = key_map[layer->keys[entry.row][entry.col]];
       if (!key || key == fn || key == fnl) return;
+
       if (l0 <= key && key < l0 + kMaxLayers) {
-        RemoveReleasedKey(entry.row, entry.col);
+        events_.RemoveReleasedKey(entry.row, entry.col);
         auto new_layer = FindLayer(key);
         if (new_layer != cur_layer_) {
           cur_layer_ = new_layer;
           fn_pressed_ = false;
+          tapping_modifier_ = 0;
+          events_.Reset();
         }
         return;
       }
       if (mlc <= key && key <= msd) {
+        tapping_modifier_ = 0;
         events_.buttons[key - mlc] = entry.pressed;
         return;
       }
       if (IsModifier(key)) {
-        if (entry.pressed) events_.modifiers |= key;
-        else events_.modifiers &= ~key;
+        // TODO: Handle releasing a modifier that doesn't exist in fn layer.
+        if (entry.pressed) {
+          events_.modifiers |= key;
+          tapping_modifier_ = key;
+        } else {
+          events_.modifiers &= ~key;
+          CheckTapping(key);
+        }
       } else {
-        if (entry.pressed) AddPressedKey(key, entry.row, entry.col);
-        else RemoveReleasedKey(entry.row, entry.col);
+        tapping_modifier_ = 0;
+        if (entry.pressed) events_.AddPressedKey(key, entry.row, entry.col);
+        else events_.RemoveReleasedKey(entry.row, entry.col);
       }
-    }
-
-    void AddPressedKey(int key, int row, int col) {
-      for (int i = 0; i < kMaxEvents; ++i) {
-        if (events_.keys[i].key != 0 &&
-            events_.keys[i].row == row && events_.keys[i].col == col) return;
-      }
-      for (int i = 0; i < kMaxEvents; ++i) {
-        if (events_.keys[i].key == 0) {
-          events_.keys[i].key = key;
-          events_.keys[i].row = row;
-          events_.keys[i].col = col;
-          return;
-        }
-      }
-      //Keyboard.print(key);
-    }
-
-    void RemoveReleasedKey(int row, int col) {
-      for (int i = 0; i < kMaxEvents; ++i) {
-        if (events_.keys[i].row == row && events_.keys[i].col == col) {
-          events_.keys[i].key = 0;
-          return;
-        }
-      }
-      //Keyboard.print(-key);
     }
 
     bool IsModifier(int key) const {
@@ -131,6 +140,7 @@ class Layout {
     const Layer<R,C>* base_layer_ = nullptr;
     Translator* const translator_ = nullptr;
     bool fn_pressed_ = false;
+    int tapping_modifier_ = 0;
     Events events_;
 };
 

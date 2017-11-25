@@ -17,7 +17,7 @@ class ViTranslator : public Translator {
     const char* name() const { return "vi"; }
 
     void Input(Events events, Sender* sender) override {
-      // TODO(hanhong): Send button events directly.
+      // TODO: Send button events directly.
       sender_ = sender;
 
       // If in insert mode, send events directly unless Esc is there.
@@ -403,7 +403,7 @@ class ViTranslator : public Translator {
     void EndOfLine() { Emit(KEY_END); }
     void PageUp() { Emit(KEY_PAGE_UP); }
     void PageDown() { Emit(KEY_PAGE_DOWN); }
-    // TODO(hanhong): word movements are browser-dependent
+    // TODO: word movements are browser-dependent
     void PrevStartOfWord() { Emit(MODIFIERKEY_CTRL, KEY_LEFT); }
     void NextStartOfWord() { Emit(MODIFIERKEY_CTRL, KEY_RIGHT); }
     void NextEndOfWord() { Emit(MODIFIERKEY_CTRL, KEY_RIGHT); }

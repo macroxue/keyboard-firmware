@@ -267,6 +267,110 @@ void test_with_vi() {
   }
 }
 
+void test_with_tapping() {
+  constexpr int R = 2, C = 2;
+
+  Layer<R,C> layers[] = {
+    { "qwerty", l0, l1, "",
+      {
+        {'q',ctl},
+        {shf,fn}
+      },
+      { {fn, bks}, {ctl, ent} }
+    },
+    { "fn", l1, l1, "",
+      {
+        {lt,'w'},
+        {shf,fn}
+      },
+      //{ {fn, bks}, {ctl, ent} }
+    }
+  };
+
+  Layout<R,C> layout(2, layers, nullptr);
+
+  Entry entries[] = {
+    // fn --> bks
+    {1,1, true},
+    {1,1, false},
+
+    // ctl --> ent
+    {0,1, true},
+    {0,1, false},
+
+    // shift-fn --> shift-bks
+    {1,0, true},
+    {1,1, true},
+    {1,1, false},
+    {1,0, false},
+
+    // ctrl-fn --> ctrl-bks
+    {0,1, true},
+    {1,1, true},
+    {1,1, false},
+    {0,1, false},
+
+    // fn-ctrl --> w
+    {1,1, true},
+    {0,1, true},
+    {0,1, false},
+    {1,1, false},
+
+    // ctrl-shift-q --> ctrl-shift-q
+    {0,1, true},
+    {1,0, true},
+    {0,0, true},
+    {0,0, false},
+    {0,1, false},
+    {1,0, false},
+
+    // q-fn --> ??
+    {0,0, true},
+    {1,1, true},
+    {0,0, false},
+    {1,1, false},
+
+    // shift-fn-q --> shift-left
+    {1,0, true},
+    {1,1, true},
+    {0,0, true},
+    {0,0, false},
+    {1,0, false},
+    {1,1, false},
+
+    // Can't handle releasing a modifier that doesn't exist in fn layer.
+#if 0
+    // ctrl-fn-q --> ctrl-left
+    {0,1, true},
+    {1,1, true},
+    {0,0, true},
+    {0,0, false},
+    {0,1, false},
+    {1,1, false},
+#endif
+
+    // fn --> bks
+    {1,1, true},
+    {1,1, false},
+  };
+
+  int num_entries = sizeof(entries)/sizeof(entries[0]);
+  FakeScanner<R,C> scanner(num_entries, entries);
+  FakeSender sender;
+
+  Controller<R,C> controller(&layout, &scanner, &sender);
+  for (int i = 0; i < num_entries * 2; ++i) {
+    controller.Scan();
+  }
+
+  auto events = sender.events();
+  assert(events.modifiers == 0);
+  for (int i = 0; i < kMaxEvents; ++i) {
+    assert(events.keys[i].key == 0);
+  }
+}
+
+
 int main() {
   puts("test_with_fn");
   test_with_fn();
@@ -274,6 +378,8 @@ int main() {
   test_with_fnl();
   puts("test_with_vi");
   test_with_vi();
+  puts("test_with_tapping");
+  test_with_tapping();
   puts("PASSED");
   return 0;
 }
