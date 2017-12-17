@@ -40,20 +40,20 @@ struct Events {
         keys[i].key = key;
         keys[i].row = row;
         keys[i].col = col;
+        // Keyboard.println(key);
         return;
       }
     }
-    //Keyboard.print(key);
   }
 
   void RemoveReleasedKey(int row, int col) {
     for (int i = 0; i < kMaxEvents; ++i) {
       if (keys[i].row == row && keys[i].col == col) {
+        // Keyboard.println(-keys[i].key);
         keys[i].key = 0;
         return;
       }
     }
-    //Keyboard.print(-key);
   }
 
   int modifiers = 0;

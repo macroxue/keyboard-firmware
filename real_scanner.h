@@ -11,7 +11,6 @@ class RealScanner : public Scanner<R,C> {
 
     Matrix<R,C> Scan() override {
       Matrix<R,C> matrix;
-#if 1
       for (int c = 0; c < C; ++c) {
         pinMode(col_pins_[c], INPUT_PULLUP);
       }
@@ -23,21 +22,8 @@ class RealScanner : public Scanner<R,C> {
         }
         digitalWrite(row_pins_[r], HIGH);
         pinMode(row_pins_[r], INPUT);
+        delay(1);
       }
-#else
-      for (int r = 0; r < R; ++r) {
-        pinMode(row_pins_[r], INPUT_PULLUP);
-      }
-      for (int c = 0; c < C; ++c) {
-        pinMode(col_pins_[c], OUTPUT);
-        digitalWrite(col_pins_[c], LOW);
-        for (int r = 0; r < R; ++r) {
-          if (digitalRead(row_pins_[r]) == LOW) matrix.Press(r, c);
-        }
-        digitalWrite(col_pins_[c], HIGH);
-        pinMode(col_pins_[c], INPUT);
-      }
-#endif
       return matrix;
     }
 
