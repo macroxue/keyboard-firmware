@@ -10,7 +10,8 @@
 //#include "layouts/geng_yun_vi.h"
 //#include "layouts/so_ho.h"
 //#include "layouts/so_ho_mini.h"
-#include "layouts/darknight.h"
+//#include "layouts/darknight.h"
+#include "layouts/darknight2.h"
 
 RealScanner<R,C> scanner(row_pins, col_pins);
 RealSender sender;

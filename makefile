@@ -1,7 +1,8 @@
-all: controller_test vi_command_test vi_translator_test
+ARDUINO=${HOME}/Downloads/arduino-1.8.7
+INCLUDES=-I${ARDUINO}/hardware/teensy/avr/cores/teensy \
+         -I${ARDUINO}/hardware/teensy/avr/cores/teensy3
 
-INCLUDES=-I/usr/share/arduino-1.6.12/hardware/teensy/avr/cores/teensy \
-         -I/usr/share/arduino-1.6.12/hardware/teensy/avr/cores/teensy3
+all: controller_test vi_command_test vi_translator_test
 
 controller_test: controller_test.cc controller.h vi_translator.h \
                  events.h key_map.h layout.h matrix.h \
