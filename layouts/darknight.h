@@ -19,7 +19,7 @@ Layer<R,C> layers[] = {
       {tab, 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p','\''},
       {lct, 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', rct},
       {lsh, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', rsh},
-      {lgu, '`', f13, f14, lal,  fn, spc, ral, '[', ']','\\', del},
+      {lgu, '`', mlc, mrc, lal,  fn, spc, ral, '[', ']','\\', del},
     },
     // Tapping on modifiers to get normal keys.
     { {fn,  bks}, {lct, esc}, {rct, ent} }
@@ -33,7 +33,7 @@ Layer<R,C> layers[] = {
       {tab, 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p','\''},
       {lct, 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', rct},
       {lsh, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', rsh},
-      {lgu, '`', f13, f14, lal,  fn, spc, ral, '[', ']','\\', del},
+      {lgu, '`', mlc, mrc, lal,  fn, spc, ral, '[', ']','\\', del},
     },
     // Tapping on modifiers to get normal keys.
     { {fn,  bks}, {lct, esc}, {rct, ent} }
@@ -44,7 +44,7 @@ Layer<R,C> layers[] = {
     "",  // use no translator
     {
       { f1,  f2,  f3,  f4,  f5,  f6,  f7,  f8,  f9, f10, f11, f12},
-      {tab,   0, mut, vdn, vup,   0, bks, mlc, mrc, del,   0, cap},
+      {tab, '`', mut, vdn, vup,   0, bks, del, '[', ']','\\', cap},
       {lct, ply, pau, rew, ffw, rec,  lt,  dn,  up,  rt,   0, rct},
       {lsh,   0, stp, ptk, ntk, ejt, hom, pgd, pgu, end,   0, rsh},
       {lgu,  l0,  l1,  l2, lal,  fn, spc, ral, '[', ']','\\', del},
