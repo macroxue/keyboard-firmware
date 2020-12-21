@@ -55,7 +55,7 @@ Layer<R,C> layers[] = {
   { "darknight-dbg",
     l3,  // this is layer 3
     l2,  // Fn layer is layer 2
-    "dbg",  // use no translator
+    "dbg",  // use debug translator
     {
       {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='},
       {tab, 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p','\''},

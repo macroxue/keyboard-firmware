@@ -2,7 +2,7 @@
 
 The firmware has been tested on Teensy 3.2 and Teensy LC for a split keyboard.
 It is meant to be compiled with Teensyduino which can be downloaded from
-[PJRC website] (http://www.pjrc.com/teensy/teensyduino.html). In the Arduino IDE
+[PJRC website](http://www.pjrc.com/teensy/teensyduino.html). In the Arduino IDE
 (1.6.12 and above), load `keyboard-firmware.ino`, set USB type to have both
 keyboard and mouse (Tools -> USB Type), compile (Sketch -> Verify/Compile) and
 upload (Sketch -> Upload) to the Teensy board.
@@ -11,8 +11,7 @@ The development environment runs on Linux Mint. Other variants in the Debian
 family, like Ubuntu, should be fine too but I didn't verify.
 
 To create a new layout, look at the files in `layouts/` directory for examples,
-particularly [`layouts/darknight2.h`]
-(https://github.com/macroxue/keyboard-firmware/blob/master/layouts/darknight2.h)
+particularly [`layouts/darknight2.h`](https://github.com/macroxue/keyboard-firmware/blob/master/layouts/darknight2.h)
 that defines multiple layers including a VI-like one. You can copy and modify
 one of them to start. After a new layout is defined, include it in
 `keyboard-firmware.ino` and comment out all other layouts.
@@ -54,6 +53,5 @@ invoking the dumps.
 * The 'p' key shows column pins and row pins.
 * The 'l' key shows all layers.
 
-See [`layouts/darknight2.h`]
-(https://github.com/macroxue/keyboard-firmware/blob/master/layouts/darknight2.h)
+See [`layouts/darknight2.h`](https://github.com/macroxue/keyboard-firmware/blob/master/layouts/darknight2.h)
 for an example of specifying the debug layer.
