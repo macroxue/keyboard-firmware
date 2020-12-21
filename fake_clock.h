@@ -1,6 +1,8 @@
 #ifndef FAKE_CLOCK_H
 #define FAKE_CLOCK_H
 
+#include "clock.h"
+
 class FakeClock : public Clock {
   public:
     unsigned Milliseconds() override { return time_; }

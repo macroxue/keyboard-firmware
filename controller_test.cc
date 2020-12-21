@@ -4,6 +4,7 @@
 #include "fake_clock.h"
 #include "fake_scanner.h"
 #include "fake_sender.h"
+#include "vi_translator.h"
 
 void test_with_fn() {
   constexpr int R = 2, C = 2;
@@ -35,7 +36,7 @@ void test_with_fn() {
     }
   };
 
-  Layout<R,C> layout(4, layers, nullptr);
+  Layout<R,C> layout(4, layers, 0, nullptr);
 
   Entry entries[] = {
     // l1
@@ -127,7 +128,7 @@ void test_with_fnl() {
     }
   };
 
-  Layout<R,C> layout(4, layers, nullptr);
+  Layout<R,C> layout(4, layers, 0, nullptr);
 
   Entry entries[] = {
     // l1
@@ -209,8 +210,9 @@ void test_with_vi() {
   };
 
   FakeClock clock;
-  ViTranslator translator(&clock);
-  Layout<R,C> layout(2, layers, &translator);
+  ViTranslator vi_translator(&clock);
+  Translator* translators[] = {&vi_translator};
+  Layout<R,C> layout(2, layers, 1, translators);
 
   Entry entries[] = {
     // switch to l1
@@ -257,7 +259,7 @@ void test_with_vi() {
   for (int i = 0; i < num_entries * 2; ++i) {
     clock.set_time(i*200);
     controller.Scan();
-    translator.AutoRepeat();
+    vi_translator.AutoRepeat();
   }
 
   auto events = sender.events();
@@ -287,7 +289,7 @@ void test_with_tapping() {
     }
   };
 
-  Layout<R,C> layout(2, layers, nullptr);
+  Layout<R,C> layout(2, layers, 0, nullptr);
 
   Entry entries[] = {
     // fn --> bks

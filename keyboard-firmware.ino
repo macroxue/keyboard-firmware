@@ -2,6 +2,8 @@
 #include "real_clock.h"
 #include "real_scanner.h"
 #include "real_sender.h"
+#include "dbg_translator.h"
+#include "vi_translator.h"
 
 // Include one and only one layout below.
 //#include "layouts/left_split.h"
@@ -16,8 +18,13 @@
 RealScanner<R,C> scanner(row_pins, col_pins);
 RealSender sender;
 RealClock clock;
-ViTranslator translator(&clock);
-Layout<R,C> layout(sizeof(layers)/sizeof(layers[0]), layers, &translator);
+DbgTranslator<R,C> dbg_translator(row_pins, col_pins,
+                                  sizeof(layers)/sizeof(layers[0]), layers);
+ViTranslator vi_translator(&clock);
+Translator* translators[] = {&dbg_translator, &vi_translator};
+Layout<R,C> layout(sizeof(layers)/sizeof(layers[0]), layers,
+                   sizeof(translators)/sizeof(translators[0]),
+                   translators);
 Controller<R,C> controller(&layout, &scanner, &sender);
 
 void setup() {

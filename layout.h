@@ -1,9 +1,11 @@
 #ifndef LAYOUT_H
 #define LAYOUT_H
 
+#include <cstring>
+
 #include "events.h"
 #include "matrix.h"
-#include "vi_translator.h"
+#include "translator.h"
 
 static const int kMaxLayers = 10;
 static const int kMaxTaps = 8;
@@ -27,8 +29,11 @@ struct Layer {
 template <int R, int C>
 class Layout {
   public:
-    Layout(int num_layers, const Layer<R, C>* layers, Translator* translator)
-      : num_layers_(num_layers), translator_(translator) {
+    Layout(int num_layers, const Layer<R, C>* layers,
+           int num_translators, Translator* translators[])
+      : num_layers_(num_layers),
+        num_translators_(num_translators),
+        translators_(translators) {
       for (int i = 0; i < num_layers_; ++i) layers_[i] = &layers[i];
       cur_layer_ = FindLayer(l0);
     }
@@ -43,12 +48,12 @@ class Layout {
     }
 
     Translator* translator() {
-      if (translator_ &&
-          strcmp(cur_layer_->translator, translator_->name()) == 0) {
-        return translator_;
-      } else {
-        return nullptr;
+      for (int i = 0; i < num_translators_; ++i) {
+        if (translators_[i] &&
+            strcmp(cur_layer_->translator, translators_[i]->name()) == 0)
+          return translators_[i];
       }
+      return nullptr;
     }
 
   private:
@@ -138,7 +143,8 @@ class Layout {
     const Layer<R,C>* layers_[kMaxLayers];
     const Layer<R,C>* cur_layer_ = nullptr;
     const Layer<R,C>* base_layer_ = nullptr;
-    Translator* const translator_ = nullptr;
+    const int num_translators_ = 0;
+    Translator** const translators_ = nullptr;
     bool fn_pressed_ = false;
     int tapping_modifier_ = 0;
     Events events_;

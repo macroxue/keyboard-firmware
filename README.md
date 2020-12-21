@@ -8,11 +8,11 @@ keyboard and mouse (Tools -> USB Type), compile (Sketch -> Verify/Compile) and
 upload (Sketch -> Upload) to the Teensy board.
 
 The development environment runs on Linux Mint. Other variants in the Debian
-family, like Ubuntu, should be fine too but I didn't verity.
+family, like Ubuntu, should be fine too but I didn't verify.
 
 To create a new layout, look at the files in `layouts/` directory for examples,
-particularly [`layouts/geng_yun_vi.h`]
-(https://github.com/macroxue/keyboard-firmware/blob/master/layouts/geng_yun_vi.h)
+particularly [`layouts/darknight2.h`]
+(https://github.com/macroxue/keyboard-firmware/blob/master/layouts/darknight2.h)
 that defines multiple layers including a VI-like one. You can copy and modify
 one of them to start. After a new layout is defined, include it in
 `keyboard-firmware.ino` and comment out all other layouts.
@@ -44,3 +44,16 @@ Or, I can fix a typo with "xp" quickly.
 
 The translator can't do everything that VI does but it does provide a usable
 VI-like environment almost everywhere.
+
+## Dumping debug info
+
+A debug layer can be installed to dump info about the keyboard. The following
+keys are supported by the debug layer. Make sure you're in an editor before
+invoking the dumps.
+
+* The 'p' key shows column pins and row pins.
+* The 'l' key shows all layers.
+
+See [`layouts/darknight2.h`]
+(https://github.com/macroxue/keyboard-firmware/blob/master/layouts/darknight2.h)
+for an example of specifying the debug layer.
