@@ -14,7 +14,24 @@ enum KeyCode : unsigned char {
   ent = 13,  // enter
   esc = 27,  // escape
   spc = 32,  // or just ' '
-
+  
+  pls = 199, // keypad plus
+  kmn = 200, // keypad minus
+  kdl = 201, // keypad del
+  kmt = 202, // keypad mult
+  kn1 = 203, // keypad 1
+  kn2 = 204, // keypad 2
+  kn3 = 205, // keypad 3
+  kn4 = 206, // keypad 4
+  kn5 = 207, // keypad 5
+  kn6 = 208, // keypad 6
+  kn7 = 209, // keypad 7
+  kn8 = 210, // keypad 8
+  kn9 = 211, // keypad 9
+  kn0 = 212, // keypad 0
+  nml = 213, // keypad numlock
+  scl = 214, // keypad scroll lock
+  
   ctl = 128, // control
   shf,       // shift
   alt,       // alt
@@ -300,22 +317,22 @@ static const int key_map[256] = {
   KEY_MEDIA_MUTE,  // 196
   KEY_MEDIA_VOLUME_INC,  // 197
   KEY_MEDIA_VOLUME_DEC,  // 198
-  0,  // 199
-  0,  // 200
-  0,  // 201
-  0,  // 202
-  0,  // 203
-  0,  // 204
-  0,  // 205
-  0,  // 206
-  0,  // 207
-  0,  // 208
-  0,  // 209
-  0,  // 210
-  0,  // 211
-  0,  // 212
-  0,  // 213
-  0,  // 214
+  KEYPAD_PLUS,  // 199
+  KEYPAD_MINUS ,  // 200
+  KEYPAD_PERIOD ,  // 201
+  KEYPAD_ASTERIX ,  // 202
+  KEYPAD_1,  // 203
+  KEYPAD_2,  // 204
+  KEYPAD_3,  // 205
+  KEYPAD_4,  // 206
+  KEYPAD_5,  // 207
+  KEYPAD_6,  // 208
+  KEYPAD_7,  // 209
+  KEYPAD_8,  // 210
+  KEYPAD_9,  // 211
+  KEYPAD_0,  // 212
+  KEY_NUM_LOCK,  // 213
+  KEY_SCROLL_LOCK,  // 214
   0,  // 215
   0,  // 216
   0,  // 217
