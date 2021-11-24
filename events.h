@@ -56,6 +56,13 @@ struct Events {
     }
   }
 
+  bool HasAnyKey() const {
+    for (int i = 0; i < kMaxEvents; ++i) {
+      if (keys[i].key) return true;
+    }
+    return false;
+  }
+
   int modifiers = 0;
   struct {
     int key;

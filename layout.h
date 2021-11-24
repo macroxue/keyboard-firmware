@@ -115,8 +115,9 @@ class Layout {
       if (IsModifier(key)) {
         // TODO: Handle releasing a modifier that doesn't exist in fn layer.
         if (entry.pressed) {
-          events_.modifiers |= key;
           tapping_modifier_ = key;
+          if (events_.HasAnyKey()) CheckTapping(key);
+          else events_.modifiers |= key;
         } else {
           events_.modifiers &= ~key;
           CheckTapping(key);

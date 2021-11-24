@@ -1,47 +1,48 @@
 #ifndef FAKE_SENDER_H
 #define FAKE_SENDER_H
 
+#include <sstream>
+
 class FakeSender : public Sender {
   public:
-    void Send(const Events& events) override {
-      auto modifiers = events.modifiers & ~0xE000;
-      bool key_pressed = (modifiers != 0);
+    ~FakeSender() {
+      assert(events_.modifiers == 0);
+      for (int i = 0; i < kMaxEvents; ++i) {
+        assert(events_.keys[i].key == 0);
+      }
+    }
 
-      if (modifiers & MODIFIERKEY_LEFT_CTRL) printf("lC-");
-      if (modifiers & MODIFIERKEY_LEFT_SHIFT) printf("lS-");
-      if (modifiers & MODIFIERKEY_LEFT_ALT) printf("lA-");
-      if (modifiers & MODIFIERKEY_LEFT_GUI) printf("lG-");
-      if (modifiers & MODIFIERKEY_RIGHT_CTRL) printf("rC-");
-      if (modifiers & MODIFIERKEY_RIGHT_SHIFT) printf("rS-");
-      if (modifiers & MODIFIERKEY_RIGHT_ALT) printf("rA-");
-      if (modifiers & MODIFIERKEY_RIGHT_GUI) printf("rG-");
+    void Send(const Events& events) override {
+      bool key_pressed = false;
       for (int i = 0; i < kMaxEvents; ++i) {
         if (events.keys[i].key == 0) continue;
+        if (key_pressed) stream_ << ' ';
+        else ShowModifiers(events);
         key_pressed = true;
 
         int ch;
         for (ch = 0; ch < 256 && key_map[ch] != events.keys[i].key; ++ch);
-        if (33 <= ch && ch <= 127) putchar(ch);
+        if (33 <= ch && ch <= 127) stream_ << char(ch);
         else {
           switch (ch) {
-            case ent: printf("ent"); break;
-            case esc: printf("esc"); break;
-            case del: printf("del"); break;
-            case bks: printf("bks"); break;
-            case spc: printf("spc"); break;
-            case up: printf("up"); break;
-            case dn: printf("dn"); break;
-            case lt: printf("lt"); break;
-            case rt: printf("rt"); break;
-            case hom: printf("hom"); break;
-            case end: printf("end"); break;
-            case pgu: printf("pgu"); break;
-            case pgd: printf("pgd"); break;
-            default: printf("\\%d", ch); break;
+            case ent: stream_ << "ent"; break;
+            case esc: stream_ << "esc"; break;
+            case del: stream_ << "del"; break;
+            case bks: stream_ << "bks"; break;
+            case spc: stream_ << "spc"; break;
+            case up: stream_ << "up"; break;
+            case dn: stream_ << "dn"; break;
+            case lt: stream_ << "lt"; break;
+            case rt: stream_ << "rt"; break;
+            case hom: stream_ << "hom"; break;
+            case end: stream_ << "end"; break;
+            case pgu: stream_ << "pgu"; break;
+            case pgd: stream_ << "pgd"; break;
+            default: stream_ << '\\' << ch; break;
           }
         }
       }
-      if (key_pressed) putchar('\n');
+      if (key_pressed) stream_ << '\n';
 
       events_ = events;
     }
@@ -50,9 +51,23 @@ class FakeSender : public Sender {
     void Delay(int ms) override {}
 
     Events events() const { return events_; }
+    std::string stream() const { return stream_.str(); }
 
   private:
+    void ShowModifiers(const Events& events) {
+      auto modifiers = events.modifiers & ~0xE000;
+      if (modifiers & MODIFIERKEY_LEFT_CTRL) stream_ << "lC-";
+      if (modifiers & MODIFIERKEY_LEFT_SHIFT) stream_ << "lS-";
+      if (modifiers & MODIFIERKEY_LEFT_ALT) stream_ << "lA-";
+      if (modifiers & MODIFIERKEY_LEFT_GUI) stream_ << "lG-";
+      if (modifiers & MODIFIERKEY_RIGHT_CTRL) stream_ << "rC-";
+      if (modifiers & MODIFIERKEY_RIGHT_SHIFT) stream_ << "rS-";
+      if (modifiers & MODIFIERKEY_RIGHT_ALT) stream_ << "rA-";
+      if (modifiers & MODIFIERKEY_RIGHT_GUI) stream_ << "rG-";
+    }
+
     Events events_;
+    std::stringstream stream_;
 };
 
 #endif

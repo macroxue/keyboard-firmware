@@ -1,10 +1,18 @@
 #include "controller.h"
 
 #include <assert.h>
+#include <iostream>
 #include "fake_clock.h"
 #include "fake_scanner.h"
 #include "fake_sender.h"
 #include "vi_translator.h"
+
+#define EXPECT_EQ(expected, actual) \
+  if (expected != actual) { \
+    std::cerr << "Expected: "#expected"\n" << expected \
+              << "Actual: "#actual"\n" << actual; \
+    assert(!"Mismatch values"); \
+  }
 
 void test_with_fn() {
   constexpr int R = 2, C = 2;
@@ -91,11 +99,23 @@ void test_with_fn() {
     controller.Scan();
   }
 
-  auto events = sender.events();
-  assert(events.modifiers == 0);
-  for (int i = 0; i < kMaxEvents; ++i) {
-    assert(events.keys[i].key == 0);
-  }
+  const char* results = R"(Q
+Q W
+Q
+Q
+esc
+esc
+ent
+ent
+D
+D V
+D
+D O
+O
+D
+D
+)";
+  EXPECT_EQ(results, sender.stream());
 }
 
 void test_with_fnl() {
@@ -184,11 +204,21 @@ void test_with_fnl() {
     controller.Scan();
   }
 
-  auto events = sender.events();
-  assert(events.modifiers == 0);
-  for (int i = 0; i < kMaxEvents; ++i) {
-    assert(events.keys[i].key == 0);
-  }
+  const char* results = R"(Q
+Q W
+Q
+Q
+esc
+esc
+ent
+ent
+D
+D V
+D
+D O
+O
+)";
+  EXPECT_EQ(results, sender.stream());
 }
 
 void test_with_vi() {
@@ -262,11 +292,15 @@ void test_with_vi() {
     vi_translator.AutoRepeat();
   }
 
-  auto events = sender.events();
-  assert(events.modifiers == 0);
-  for (int i = 0; i < kMaxEvents; ++i) {
-    assert(events.keys[i].key == 0);
-  }
+  const char* results = R"(lC-lS-rt
+lC-C
+2
+lC-W
+lC-rt
+1
+W
+)";
+  EXPECT_EQ(results, sender.stream());
 }
 
 void test_with_tapping() {
@@ -354,6 +388,18 @@ void test_with_tapping() {
     // fn --> bks
     {1,1, true},
     {1,1, false},
+
+    // q-ctrl --> q, ent
+    {0,0, true},
+    {0,1, true},
+    {0,0, false},
+    {0,1, false},
+
+    // q-ctrl --> q, ent
+    {0,0, true},
+    {0,1, true},
+    {0,1, false},
+    {0,0, false},
   };
 
   int num_entries = sizeof(entries)/sizeof(entries[0]);
@@ -365,13 +411,26 @@ void test_with_tapping() {
     controller.Scan();
   }
 
-  auto events = sender.events();
-  assert(events.modifiers == 0);
-  for (int i = 0; i < kMaxEvents; ++i) {
-    assert(events.keys[i].key == 0);
-  }
+  const char* results = R"(bks
+ent
+lS-bks
+lC-bks
+W
+lC-lS-Q
+Q
+Q
+lS-lt
+bks
+Q
+Q ent
+Q
+Q
+Q ent
+Q
+Q
+)";
+  EXPECT_EQ(results, sender.stream());
 }
-
 
 int main() {
   puts("test_with_fn");
