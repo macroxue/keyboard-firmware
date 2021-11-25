@@ -2,19 +2,30 @@
 
 The firmware has been tested on Teensy 3.2 and Teensy LC for a split keyboard.
 It is meant to be compiled with Teensyduino which can be downloaded from
-[PJRC website](http://www.pjrc.com/teensy/teensyduino.html). In the Arduino IDE
-(1.6.12 and above), load `keyboard-firmware.ino`, set USB type to have both
-keyboard and mouse (Tools -> USB Type), compile (Sketch -> Verify/Compile) and
-upload (Sketch -> Upload) to the Teensy board.
-
-The development environment runs on Linux Mint. Other variants in the Debian
+[PJRC website](http://www.pjrc.com/teensy/teensyduino.html).
+My development environment runs on Linux Mint. Other variants in the Debian
 family, like Ubuntu, should be fine too but I didn't verify.
 
-To create a new layout, look at the files in `layouts/` directory for examples,
-particularly [`layouts/darknight2.h`](https://github.com/macroxue/keyboard-firmware/blob/master/layouts/darknight2.h)
-that defines multiple layers including a VI-like one. You can copy and modify
-one of them to start. After a new layout is defined, include it in
-`keyboard-firmware.ino` and comment out all other layouts.
+To support multiple keyboards nicely, the firmware should be installed as an
+Arduino library. The easiest way is to create a symbolic link to a clone of
+this repository under the directory of Arduino libraries. For example,
+```
+~/Downloads/arduino-1.8.7/libraries/keyboard-firmware -> ~/projects/keyboard-firmware
+```
+but your paths may be different. The exact `keyboard-firmware` directory name
+must be used or Arduino will complain.
+
+To create a new keyboard, look at the files in `keyboards/` directory for examples.
+In particular, I've been using the [Darknight keyboard](https://github.com/macroxue/keyboard-diy)
+for several years. Its definition
+[`darknight.ino`](https://github.com/macroxue/keyboard-firmware/blob/master/keyboards/darknight/darknight.ino)
+has multiple layers including a VI-like one. You can copy and modify
+any of the keyboards to start.
+
+After a keyboard is defined, the next step is to compile it and upload it to Teensy.
+In the Arduino IDE (1.6.12 and above), open the `.ino` file, set USB
+type to have both keyboard and mouse (Tools -> USB Type), compile (Sketch ->
+Verify/Compile) and upload (Sketch -> Upload) to the Teensy board.
 
 ## Switching between layers
 
@@ -52,6 +63,3 @@ invoking the dumps.
 
 * The 'p' key shows column pins and row pins.
 * The 'l' key shows all layers.
-
-See [`layouts/darknight2.h`](https://github.com/macroxue/keyboard-firmware/blob/master/layouts/darknight2.h)
-for an example of specifying the debug layer.

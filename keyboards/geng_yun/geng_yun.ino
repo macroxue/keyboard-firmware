@@ -1,3 +1,5 @@
+#include <keyboard-firmware.h>
+
 // The layout has 6 rows and 14 columns.
 constexpr int R = 6, C = 14;
 
@@ -56,3 +58,5 @@ Layer<R,C> layers[] = {
     { {fn,  bks}, {lct, esc}, {rct, ent} }
   },
 };
+
+#include <keyboard-firmware.cc>
