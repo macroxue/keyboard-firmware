@@ -24,6 +24,7 @@ struct Layer {
   const char* translator;
   unsigned char keys[R][C];
   Tap taps[kMaxTaps];
+  int freq[R][C];
 };
 
 template <int R, int C>
@@ -93,6 +94,9 @@ class Layout {
     }
 
     void Interpret(const Entry& entry, const Layer<R,C>* layer) {
+      if (entry.pressed)
+        ++const_cast<Layer<R,C>*>(layer)->freq[entry.row][entry.col];
+
       int key = key_map[layer->keys[entry.row][entry.col]];
       if (!key || key == fn || key == fnl) return;
 

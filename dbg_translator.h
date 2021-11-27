@@ -20,6 +20,7 @@ class DbgTranslator : public Translator {
 
     void Input(Events events, Sender* sender) override {
       switch (events.keys[0].key) {
+        case KEY_H: ShowHeatMap(sender); break;
         case KEY_L: ShowLayers(sender); break;
         case KEY_P: ShowPins(sender); break;
       }
@@ -28,6 +29,26 @@ class DbgTranslator : public Translator {
     void AutoRepeat() override {}
 
   private:
+    void ShowHeatMap(Sender* sender) {
+      char message[200];
+      for (int l = 0; l < num_layers_; ++l) {
+        const auto& layer = layers_[l];
+        sprintf(message, "layer[%d] = {\n", l);
+        sender->Send(message);
+        for (int r = 0; r < R; ++r) {
+          sprintf(message, "  row[%d] = { ", r);
+          for (int c = 0; c < C; ++c) {
+            sprintf(message + strlen(message), "%d%c", layer.freq[r][c],
+                    (c < C - 1 ? ',' : ' '));
+          }
+          sprintf(message + strlen(message), "},\n");
+          sender->Send(message);
+        }
+        sprintf(message, "};\n");
+        sender->Send(message);
+      }
+    }
+
     void ShowLayers(Sender* sender) {
       char message[200];
 

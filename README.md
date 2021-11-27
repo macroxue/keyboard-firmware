@@ -63,3 +63,4 @@ invoking the dumps.
 
 * The 'p' key shows column pins and row pins.
 * The 'l' key shows all layers.
+* The 'h' key shows heat maps of keystrokes in all layers.

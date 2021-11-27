@@ -19,5 +19,5 @@ vi_translator_test: vi_translator_test.cc vi_translator.h translator.h \
 
 dbg_translator_test: dbg_translator_test.cc dbg_translator.h translator.h \
                     events.h fake_sender.h \
-                    layout.h layouts/darknight2.h
+                    layout.h layouts/darknight.h
 	g++ -g -std=c++0x -o $@ $(filter %.cc,$^) ${INCLUDES}
