@@ -85,6 +85,25 @@ enum KeyCode : unsigned char {
   vup,        // volume up
   vdn,        // volume down
 
+  kn1 = 201,  // keypad 1
+  kn2 = 202,  // keypad 2
+  kn3 = 203,  // keypad 3
+  kn4 = 204,  // keypad 4
+  kn5 = 205,  // keypad 5
+  kn6 = 206,  // keypad 6
+  kn7 = 207,  // keypad 7
+  kn8 = 208,  // keypad 8
+  kn9 = 209,  // keypad 9
+  kn0 = 210,  // keypad 0
+  kpr = 211,  // keypad period
+  ken = 212,  // keypad enter
+  kpl = 213,  // keypad plus
+  kmn = 214,  // keypad minus
+  kas = 215,  // keypad asterix
+  ksl = 216,  // keypad slash
+  nml = 217,  // num lock
+  scl = 218,  // scroll lock
+
   l0 = 240,   // layer 0
   l1,
   l2,
@@ -302,24 +321,24 @@ static const int key_map[256] = {
   KEY_MEDIA_VOLUME_DEC,  // 198
   0,  // 199
   0,  // 200
-  0,  // 201
-  0,  // 202
-  0,  // 203
-  0,  // 204
-  0,  // 205
-  0,  // 206
-  0,  // 207
-  0,  // 208
-  0,  // 209
-  0,  // 210
-  0,  // 211
-  0,  // 212
-  0,  // 213
-  0,  // 214
-  0,  // 215
-  0,  // 216
-  0,  // 217
-  0,  // 218
+  KEYPAD_1,  // 201
+  KEYPAD_2,  // 202
+  KEYPAD_3,  // 203
+  KEYPAD_4,  // 204
+  KEYPAD_5,  // 205
+  KEYPAD_6,  // 206
+  KEYPAD_7,  // 207
+  KEYPAD_8,  // 208
+  KEYPAD_9,  // 209
+  KEYPAD_0,  // 210
+  KEYPAD_PERIOD ,  // 211
+  KEYPAD_ENTER ,  // 212
+  KEYPAD_PLUS,  // 213
+  KEYPAD_MINUS ,  // 214
+  KEYPAD_ASTERIX ,  // 215
+  KEYPAD_SLASH ,  // 216
+  KEY_NUM_LOCK,  // 217
+  KEY_SCROLL_LOCK,  // 218
   0,  // 219
   0,  // 220
   0,  // 221
