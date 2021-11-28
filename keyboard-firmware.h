@@ -1,5 +1,6 @@
 #include "controller.h"
 #include "real_clock.h"
+#include "real_lighter.h"
 #include "real_scanner.h"
 #include "real_sender.h"
 #include "dbg_translator.h"

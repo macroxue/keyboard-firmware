@@ -5,9 +5,10 @@ DbgTranslator<R,C> dbg_translator(row_pins, col_pins,
                                   sizeof(layers)/sizeof(layers[0]), layers);
 ViTranslator vi_translator(&clock);
 Translator* translators[] = {&dbg_translator, &vi_translator};
+RealLighter lighter(led_pins, sizeof(led_pins)/sizeof(led_pins[0]));
 Layout<R,C> layout(sizeof(layers)/sizeof(layers[0]), layers,
                    sizeof(translators)/sizeof(translators[0]),
-                   translators);
+                   translators, &lighter);
 Controller<R,C> controller(&layout, &scanner, &sender);
 
 void setup() {

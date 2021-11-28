@@ -4,6 +4,7 @@
 #include <cstring>
 
 #include "events.h"
+#include "lighter.h"
 #include "matrix.h"
 #include "translator.h"
 
@@ -31,10 +32,11 @@ template <int R, int C>
 class Layout {
   public:
     Layout(int num_layers, const Layer<R, C>* layers,
-           int num_translators, Translator* translators[])
+           int num_translators, Translator* translators[], Lighter* lighter = nullptr)
       : num_layers_(num_layers),
         num_translators_(num_translators),
-        translators_(translators) {
+        translators_(translators),
+        lighter_(lighter) {
       for (int i = 0; i < num_layers_; ++i) layers_[i] = &layers[i];
       cur_layer_ = FindLayer(l0);
     }
@@ -75,6 +77,7 @@ class Layout {
           } else {
             cur_layer_ = base_layer_;
           }
+          LightForLayer(cur_layer_);
           break;
         }
       }
@@ -108,6 +111,7 @@ class Layout {
           fn_pressed_ = false;
           tapping_modifier_ = 0;
           events_.Reset();
+          LightForLayer(cur_layer_);
         }
         return;
       }
@@ -144,12 +148,21 @@ class Layout {
       return nullptr;
     }
 
+    void LightForLayer(const Layer<R,C>* layer) const {
+      if (!lighter_) return;
+      int index = layer->layer_id - l0;
+      for (int bit = 0; bit < lighter_->num_leds(); ++bit, index >>= 1) {
+        lighter_->Led(bit, index & 1);
+      }
+    }
+
     const int num_layers_ = 0;
     const Layer<R,C>* layers_[kMaxLayers];
     const Layer<R,C>* cur_layer_ = nullptr;
     const Layer<R,C>* base_layer_ = nullptr;
     const int num_translators_ = 0;
     Translator** const translators_ = nullptr;
+    Lighter* const lighter_ = nullptr;
     bool fn_pressed_ = false;
     int tapping_modifier_ = 0;
     Events events_;

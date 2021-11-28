@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <iostream>
 #include "fake_clock.h"
+#include "fake_lighter.h"
 #include "fake_scanner.h"
 #include "fake_sender.h"
 #include "vi_translator.h"
@@ -44,10 +45,11 @@ void test_with_fn() {
     }
   };
 
-  Layout<R,C> layout(4, layers, 0, nullptr);
+  FakeLighter lighter;
+  Layout<R,C> layout(4, layers, 0, nullptr, &lighter);
 
   Entry entries[] = {
-    // l1
+    // fn-l0
     {1,1, true},
     {0,0, true},
     {0,0, false},
@@ -65,7 +67,7 @@ void test_with_fn() {
     {1,1, false},
     {0,1, false},
 
-    // l2
+    // fn-l2
     {1,1, true},
     {1,0, true},
     {1,0, false},
@@ -83,9 +85,9 @@ void test_with_fn() {
     {0,0, false},
     {1,0, false},
 
-    // switch back to l1
-    {0,0, true},
+    // switch back to l0
     {1,1, true},
+    {0,0, true},
     {0,0, false},
     {1,1, false},
   };
@@ -112,10 +114,15 @@ D V
 D
 D O
 O
-D
-D
 )";
   EXPECT_EQ(results, sender.stream());
+
+  const char* leds = R"(LED 0 off
+LED 1 on
+LED 0 off
+LED 1 off
+)";
+  EXPECT_EQ(leds, lighter.stream());
 }
 
 void test_with_fnl() {
@@ -148,10 +155,11 @@ void test_with_fnl() {
     }
   };
 
-  Layout<R,C> layout(4, layers, 0, nullptr);
+  FakeLighter lighter;
+  Layout<R,C> layout(4, layers, 0, nullptr, &lighter);
 
   Entry entries[] = {
-    // l1
+    // fn-l0
     {1,1, true},
     {0,0, true},
     {0,0, false},
@@ -169,7 +177,7 @@ void test_with_fnl() {
     {1,1, false},
     {0,1, false},
 
-    // l2
+    // fn-l2
     {1,0, true},
     {1,0, false},
 
@@ -188,7 +196,7 @@ void test_with_fnl() {
     {0,0, false},
     {1,0, false},
 
-    // switch back to l1
+    // switch back to l0
     {1,1, true},
     {1,1, false},
     {0,0, true},
@@ -219,6 +227,25 @@ D O
 O
 )";
   EXPECT_EQ(results, sender.stream());
+
+  const char* leds = R"(LED 0 on
+LED 1 off
+LED 0 off
+LED 1 off
+LED 0 on
+LED 1 off
+LED 0 off
+LED 1 on
+LED 0 on
+LED 1 on
+LED 0 off
+LED 1 on
+LED 0 on
+LED 1 on
+LED 0 off
+LED 1 off
+)";
+  EXPECT_EQ(leds, lighter.stream());
 }
 
 void test_with_vi() {

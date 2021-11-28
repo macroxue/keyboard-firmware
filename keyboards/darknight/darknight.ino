@@ -4,10 +4,17 @@
 constexpr int R = 5, C = 12;
 
 // The row pins, to be modified according to the exact wiring.
-const int row_pins[R] = { 18, 17, 16, 15, 14};
+const int row_pins[R] = {18, 17, 16, 15, 14};
 
 // The column pins, to be modified according to the exact wiring.
-const int col_pins[C] = { 0, 1, 2, 3, 4, 5, 11, 10, 9, 8, 7, 6};
+const int col_pins[C] = {0, 1, 2, 3, 4, 5, 11, 10, 9, 8, 7, 6};
+
+// LED pins are for displaying the active layer with binary code.
+// High bits are not displayed when there are not enough LEDs.
+// Pin 13 is for the built-in LED with Teensy LC, 3.2 and 4.0.
+// Make sure it's not already used by one of the rows/columns.
+// Set an empty initializer {} to disable this feature.
+const int led_pins[] = {13};
 
 // Layers of this layout. The keyboard always loads layer 0 to start.
 // See key_map.h for definitions of keys, e.g. lsh <=> left shift.

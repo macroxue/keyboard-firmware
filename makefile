@@ -6,7 +6,7 @@ all: controller_test vi_command_test vi_translator_test dbg_translator_test
 
 controller_test: controller_test.cc controller.h vi_translator.h \
                  events.h key_map.h layout.h matrix.h \
-                 fake_clock.h fake_scanner.h fake_sender.h
+                 fake_clock.h fake_lighter.h fake_scanner.h fake_sender.h
 	g++ -g -std=c++0x -o $@ $(filter %.cc,$^) ${INCLUDES}
 
 vi_command_test: vi_command_test.cc vi_command.h
