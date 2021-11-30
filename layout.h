@@ -83,6 +83,16 @@ class Layout {
       }
     }
 
+    bool IsDualRole(int key) const {
+      if (!IsModifier(key)) return false;
+      const auto& taps = cur_layer_->taps;
+      for (int i = 0; i < kMaxTaps; ++i) {
+        if (taps[i].modifier == 0) return false;
+        if (key_map[taps[i].modifier] == key) return true;
+      }
+      return false;
+    }
+
     void CheckTapping(int modifier) {
       if (tapping_modifier_ != modifier) return;
       const auto& taps = cur_layer_->taps;
@@ -120,8 +130,8 @@ class Layout {
         events_.buttons[key - mlc] = entry.pressed;
         return;
       }
-      if (IsModifier(key)) {
-        // TODO: Handle releasing a modifier that doesn't exist in fn layer.
+      // TODO: Handle releasing a modifier that doesn't exist in fn layer.
+      if (IsDualRole(key)) {
         if (entry.pressed) {
           tapping_modifier_ = key;
           if (events_.HasAnyKey()) CheckTapping(key);
@@ -130,6 +140,9 @@ class Layout {
           events_.modifiers &= ~key;
           CheckTapping(key);
         }
+      } else if (IsModifier(key)) {
+        if (entry.pressed) events_.modifiers |= key;
+        else events_.modifiers &= ~key;
       } else {
         tapping_modifier_ = 0;
         if (entry.pressed) {

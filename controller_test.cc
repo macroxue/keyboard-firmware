@@ -104,7 +104,7 @@ void test_with_fn() {
   const char* results = R"(q
 q w
 q
-q
+lS-q
 esc
 esc
 ent
@@ -215,7 +215,7 @@ void test_with_fnl() {
   const char* results = R"(q
 q w
 q
-q
+lS-q
 esc
 esc
 ent
