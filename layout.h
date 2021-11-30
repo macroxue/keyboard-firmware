@@ -107,8 +107,14 @@ class Layout {
     }
 
     void Interpret(const Entry& entry, const Layer<R,C>* layer) {
-      if (entry.pressed)
+      if (entry.pressed) {
         ++const_cast<Layer<R,C>*>(layer)->freq[entry.row][entry.col];
+        // Clear the shifted modifier as soon as the next key's pressed.
+        if (shifted_key_) {
+          events_.modifiers &= ~MODIFIERKEY_SHIFT;
+          shifted_key_ = false;
+        }
+      }
 
       int key = key_map[layer->keys[entry.row][entry.col]];
       if (!key || key == fn || key == fnl) return;
@@ -147,11 +153,13 @@ class Layout {
         tapping_modifier_ = 0;
         if (entry.pressed) {
           events_.AddPressedKey(key > 0 ? key : -key, entry.row, entry.col);
+          if (key < 0) {
+            events_.modifiers |= MODIFIERKEY_SHIFT;
+            shifted_key_ = true;
+          }
         } else {
           events_.RemoveReleasedKey(entry.row, entry.col);
         }
-        // TODO: This has an unintended effect of shifting other keys.
-        if (key < 0) events_.modifiers ^= MODIFIERKEY_SHIFT;
       }
     }
 
@@ -182,6 +190,7 @@ class Layout {
     Translator** const translators_ = nullptr;
     Lighter* const lighter_ = nullptr;
     bool fn_pressed_ = false;
+    bool shifted_key_ = false;
     int tapping_modifier_ = 0;
     Events events_;
 };

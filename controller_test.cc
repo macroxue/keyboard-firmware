@@ -518,7 +518,7 @@ void test_with_shifted() {
   const char* results = R"(=
 lS-5
 lS-5
-=
+lS-=
 )";
   EXPECT_EQ(results, sender.stream());
 }
