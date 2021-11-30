@@ -101,19 +101,19 @@ void test_with_fn() {
     controller.Scan();
   }
 
-  const char* results = R"(Q
-Q W
-Q
-Q
+  const char* results = R"(q
+q w
+q
+q
 esc
 esc
 ent
 ent
-D
-D V
-D
-D O
-O
+d
+d v
+d
+d o
+o
 )";
   EXPECT_EQ(results, sender.stream());
 
@@ -212,19 +212,19 @@ void test_with_fnl() {
     controller.Scan();
   }
 
-  const char* results = R"(Q
-Q W
-Q
-Q
+  const char* results = R"(q
+q w
+q
+q
 esc
 esc
 ent
 ent
-D
-D V
-D
-D O
-O
+d
+d v
+d
+d o
+o
 )";
   EXPECT_EQ(results, sender.stream());
 
@@ -320,12 +320,12 @@ void test_with_vi() {
   }
 
   const char* results = R"(lC-lS-rt
-lC-C
+lC-c
 2
-lC-W
+lC-w
 lC-rt
 1
-W
+w
 )";
   EXPECT_EQ(results, sender.stream());
 }
@@ -442,19 +442,83 @@ void test_with_tapping() {
 ent
 lS-bks
 lC-bks
-W
-lC-lS-Q
-Q
-Q
+w
+lC-lS-q
+q
+q
 lS-lt
 bks
-Q
-Q ent
-Q
-Q
-Q ent
-Q
-Q
+q
+q ent
+q
+q
+q ent
+q
+q
+)";
+  EXPECT_EQ(results, sender.stream());
+}
+
+void test_with_shifted() {
+  constexpr int R = 2, C = 2;
+
+  Layer<R,C> layers[] = {
+    { "base", l0, l1, "",
+      {
+        {'=','5'},
+        {shf,fn}
+      },
+    },
+    { "fn", l1, l1, "",
+      {
+        {'+','%'},
+        {shf,fn}
+      },
+      //{ {fn, bks}, {ctl, ent} }
+    }
+  };
+
+  Layout<R,C> layout(2, layers, 0, nullptr);
+
+  Entry entries[] = {
+    // '='
+    {0,0, true},
+    {0,0, false},
+
+    // shift-5
+    {1,0, true},
+    {0,1, true},
+    {0,1, false},
+    {1,0, false},
+
+    // fn-5
+    {1,1, true},
+    {0,1, true},
+    {0,1, false},
+    {1,1, false},
+
+    // shift-fn-=
+    {1,0, true},
+    {1,1, true},
+    {0,0, true},
+    {0,0, false},
+    {1,1, false},
+    {1,0, false},
+  };
+
+  int num_entries = sizeof(entries)/sizeof(entries[0]);
+  FakeScanner<R,C> scanner(num_entries, entries);
+  FakeSender sender;
+
+  Controller<R,C> controller(&layout, &scanner, &sender);
+  for (int i = 0; i < num_entries * 2; ++i) {
+    controller.Scan();
+  }
+
+  const char* results = R"(=
+lS-5
+lS-5
+=
 )";
   EXPECT_EQ(results, sender.stream());
 }
@@ -468,6 +532,8 @@ int main() {
   test_with_vi();
   puts("test_with_tapping");
   test_with_tapping();
+  puts("test_with_shifted");
+  test_with_shifted();
   puts("PASSED");
   return 0;
 }

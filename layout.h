@@ -132,8 +132,13 @@ class Layout {
         }
       } else {
         tapping_modifier_ = 0;
-        if (entry.pressed) events_.AddPressedKey(key, entry.row, entry.col);
-        else events_.RemoveReleasedKey(entry.row, entry.col);
+        if (entry.pressed) {
+          events_.AddPressedKey(key > 0 ? key : -key, entry.row, entry.col);
+        } else {
+          events_.RemoveReleasedKey(entry.row, entry.col);
+        }
+        // TODO: This has an unintended effect of shifting other keys.
+        if (key < 0) events_.modifiers ^= MODIFIERKEY_SHIFT;
       }
     }
 

@@ -6,8 +6,7 @@
 #endif
 #include "keylayouts.h"
 
-// Be aware. The enum below doesn't include keys like '!' and '{' because they
-// are shift-'1' and shift-'[' respectively.
+// Key codes of printable characters are their ASCII codes.
 enum KeyCode : unsigned char {
   bks = 8,   // backspace
   tab = 9,   // tab
@@ -119,6 +118,31 @@ enum KeyCode : unsigned char {
   fn          // shift to fn layer
 };
 
+// Negative values represent shifted keys like '!' and '{' which are shift-'1' and
+// shift-'[' respectively. Names are from https://en.wikipedia.org/wiki/ASCII.
+enum ShiftedKeys {
+  KEY_EXCLAMATION = -KEY_1,
+  KEY_AT = -KEY_2,
+  KEY_HASH = -KEY_3,
+  KEY_DOLLAR = -KEY_4,
+  KEY_PERCENT = -KEY_5,
+  KEY_CARET = -KEY_6,
+  KEY_AMPERSAND = -KEY_7,
+  KEY_ASTERIX = -KEY_8,
+  KEY_LEFT_PAREN = -KEY_9,
+  KEY_RIGHT_PAREN = -KEY_0,
+  KEY_UNDERLINE = -KEY_MINUS,
+  KEY_PLUS = -KEY_EQUAL,
+  KEY_LEFT_CURLY = -KEY_LEFT_BRACE,
+  KEY_RIGHT_CURLY = -KEY_RIGHT_BRACE,
+  KEY_PIPE = -KEY_BACKSLASH,
+  KEY_COLON = -KEY_SEMICOLON,
+  KEY_DOUBLE_QUOTE = -KEY_QUOTE,
+  KEY_LESS_THAN = -KEY_COMMA,
+  KEY_GREATER_THAN = -KEY_PERIOD,
+  KEY_QUESTION = -KEY_SLASH,
+};
+
 static const int key_map[256] = {
   0,  // 0
   0,  // 1
@@ -153,17 +177,17 @@ static const int key_map[256] = {
   0,  // 30
   0,  // 31
   KEY_SPACE,  // 32
-  0,  // 33
-  0,  // 34
-  0,  // 35
-  0,  // 36
-  0,  // 37
-  0,  // 38
+  KEY_EXCLAMATION,  // 33
+  KEY_DOUBLE_QUOTE,  // 34
+  KEY_HASH,  // 35
+  KEY_DOLLAR,  // 36
+  KEY_PERCENT,  // 37
+  KEY_AMPERSAND,  // 38
   KEY_QUOTE,  // 39
-  0,  // 40
-  0,  // 41
-  0,  // 42
-  0,  // 43
+  KEY_LEFT_PAREN,  // 40
+  KEY_RIGHT_PAREN,  // 41
+  KEY_ASTERIX,  // 42
+  KEY_PLUS,  // 43
   KEY_COMMA,  // 44
   KEY_MINUS,  // 45
   KEY_PERIOD,  // 46
@@ -178,44 +202,44 @@ static const int key_map[256] = {
   KEY_7,  // 55
   KEY_8,  // 56
   KEY_9,  // 57
-  0,  // 58
+  KEY_COLON,  // 58
   KEY_SEMICOLON,  // 59
-  0,  // 60
+  KEY_LESS_THAN,  // 60
   KEY_EQUAL,  // 61
-  0,  // 62
-  0,  // 63
-  0,  // 64
-  KEY_A,  // 65
-  KEY_B,  // 66
-  KEY_C,  // 67
-  KEY_D,  // 68
-  KEY_E,  // 69
-  KEY_F,  // 70
-  KEY_G,  // 71
-  KEY_H,  // 72
-  KEY_I,  // 73
-  KEY_J,  // 74
-  KEY_K,  // 75
-  KEY_L,  // 76
-  KEY_M,  // 77
-  KEY_N,  // 78
-  KEY_O,  // 79
-  KEY_P,  // 80
-  KEY_Q,  // 81
-  KEY_R,  // 82
-  KEY_S,  // 83
-  KEY_T,  // 84
-  KEY_U,  // 85
-  KEY_V,  // 86
-  KEY_W,  // 87
-  KEY_X,  // 88
-  KEY_Y,  // 89
-  KEY_Z,  // 90
+  KEY_GREATER_THAN,  // 62
+  KEY_QUESTION,  // 63
+  KEY_AT,  // 64
+  -KEY_A,  // 65
+  -KEY_B,  // 66
+  -KEY_C,  // 67
+  -KEY_D,  // 68
+  -KEY_E,  // 69
+  -KEY_F,  // 70
+  -KEY_G,  // 71
+  -KEY_H,  // 72
+  -KEY_I,  // 73
+  -KEY_J,  // 74
+  -KEY_K,  // 75
+  -KEY_L,  // 76
+  -KEY_M,  // 77
+  -KEY_N,  // 78
+  -KEY_O,  // 79
+  -KEY_P,  // 80
+  -KEY_Q,  // 81
+  -KEY_R,  // 82
+  -KEY_S,  // 83
+  -KEY_T,  // 84
+  -KEY_U,  // 85
+  -KEY_V,  // 86
+  -KEY_W,  // 87
+  -KEY_X,  // 88
+  -KEY_Y,  // 89
+  -KEY_Z,  // 90
   KEY_LEFT_BRACE,  // 91
   KEY_BACKSLASH,  // 92
   KEY_RIGHT_BRACE,  // 93
-  0,  // 94
-  0,  // 95
+  KEY_CARET,  // 94
+  KEY_UNDERLINE,  // 95
   KEY_TILDE,  // 96
   KEY_A,  // 97
   KEY_B,  // 98
@@ -243,9 +267,9 @@ static const int key_map[256] = {
   KEY_X,  // 120
   KEY_Y,  // 121
   KEY_Z,  // 122
-  0,  // 123
-  0,  // 124
-  0,  // 125
+  KEY_LEFT_CURLY,  // 123
+  KEY_PIPE,  // 124
+  KEY_RIGHT_CURLY,  // 125
   KEY_TILDE,  // 126
   0,  // 127
   MODIFIERKEY_CTRL,  // 128
