@@ -56,7 +56,7 @@ Layer<R,C> layers[] = {
       {tab,   0, mut, vdn, vup,   0,   0,   0,   0,   0,   0, cap},
       {lct, ply, pau, rew, ffw, rec,  lt,  dn,  up,  rt,   0, rct},
       {lsh,   0, stp, ptk, ntk, ejt, hom, pgd, pgu, end,   0, rsh},
-      {lgu,  l0,  l1,  l2, lal,  fn, bks, ral,  l3,   0,   0, del},
+      {lgu,  l0,  l1,  l2, lal,  fn, bks, ral,  l3,  l4,  l5, del},
     },
     // Tapping on modifiers to get normal keys.
     { {fn,  bks}, {lct, esc}, {rct, ent} }
@@ -73,6 +73,35 @@ Layer<R,C> layers[] = {
       {lgu, '`', mlc, mrc, lal,  fn, spc, ral, '[', ']','\\', del},
     },
   },
+  { "darknight-mod-fn",  // name of this layer
+    l4,  // this is layer 4
+    l4,  // Fn layer is itself
+    "",  // use no translator
+    {
+      {0,  f1,  f2,  f3,  f4,  f5,  f6,  f7,  f8,  f9, f10, 0},
+      {0, f11, f12, vup, vdn, mut, '_', '-', '=', '+', '~', 0},
+      {0, cap, hom, pgd, pgu, end,  lt,  dn,  up,  rt, '`', 0},
+      {0, lgu, lsh, lct, 'v', 'b', '"','\'', rct, rsh, del, 0},
+      {0,  l0,  l1,  l2, lal,  fn, bks, ral,  l4,  l5,  l6, 0},
+    },
+    // Tapping on modifiers to get normal keys.
+    { {fn,  bks}, {lct, 'c'}, {rct, ','}, {lsh, 'x'}, {rsh, '.'},
+      {lal, esc}, {ral, ent} }
+  },
+  { "darknight-mod",  // name of this layer
+    l5,  // this is layer 5
+    l4,  // Fn layer is layer 4
+    "",  // use no translator
+    {
+      {0, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 0},
+      {0, 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 0},
+      {0, 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', 0},
+      {0, 'z', lsh, lct, 'v', 'b', 'n', 'm', rct, rsh, '/', 0},
+      {0, tab, mlc, mrc, lal,  fn, spc, ral, '[', ']', '\\', 0},
+    },
+    // Tapping on modifiers to get normal keys.
+    { {fn,  bks}, {lct, 'c'}, {rct, ','}, {lsh, 'x'}, {rsh, '.'},
+      {lal, esc}, {ral, ent} }
 };
 
 #include <keyboard-firmware.cc>
