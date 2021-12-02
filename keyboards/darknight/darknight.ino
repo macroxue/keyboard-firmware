@@ -102,6 +102,7 @@ Layer<R,C> layers[] = {
     // Tapping on modifiers to get normal keys.
     { {fn,  bks}, {lct, 'c'}, {rct, ','}, {lsh, 'x'}, {rsh, '.'},
       {lal, esc}, {ral, ent} }
+  },
 };
 
 #include <keyboard-firmware.cc>
