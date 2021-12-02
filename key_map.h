@@ -141,6 +141,8 @@ enum ShiftedKeys {
   KEY_LESS_THAN = -KEY_COMMA,
   KEY_GREATER_THAN = -KEY_PERIOD,
   KEY_QUESTION = -KEY_SLASH,
+  // KEY_TILDE is mapped to '`' instead of '~' by Teensy.
+  KEY_WAVE = -KEY_TILDE,
 };
 
 static const int key_map[256] = {
@@ -270,7 +272,7 @@ static const int key_map[256] = {
   KEY_LEFT_CURLY,  // 123
   KEY_PIPE,  // 124
   KEY_RIGHT_CURLY,  // 125
-  KEY_TILDE,  // 126
+  KEY_WAVE,  // 126
   0,  // 127
   MODIFIERKEY_CTRL,  // 128
   MODIFIERKEY_SHIFT,  // 129
