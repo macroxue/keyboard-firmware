@@ -114,8 +114,10 @@ enum KeyCode : unsigned char {
   l8,
   l9,         // layer 9
 
-  fnl = 254,  // lock to fn layer
-  fn          // shift to fn layer
+  fnl = 253,  // lock to fn layer
+  fn = 254,   // shift to fn layer
+  lfn = 254,  // same as fn
+  rfn = 255,
 };
 
 // Negative values represent shifted keys like '!' and '{' which are shift-'1' and
@@ -399,9 +401,9 @@ static const int key_map[256] = {
   0,  // 250
   0,  // 251
   0,  // 252
-  0,  // 253
-  fnl,  // 254
-  fn   // 255
+  fnl,  // 253
+  lfn,  // 254
+  rfn,  // 255
 };
 
 #endif

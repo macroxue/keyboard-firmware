@@ -9,7 +9,7 @@
 #include "translator.h"
 
 static const int kMaxLayers = 10;
-static const int kMaxTaps = 8;
+static const int kMaxTaps = 10;
 
 // Tapping on a modifier (including fn) results in a regular key.
 struct Tap {
@@ -63,10 +63,10 @@ class Layout {
     void UpdateFnState(int num_entries, const Entry* entries) {
       for (int i = 0; i < num_entries; ++i) {
         int key = key_map[cur_layer_->keys[entries[i].row][entries[i].col]];
-        if (key == fn) {
+        if (key == lfn || key == rfn) {
           fn_pressed_ = entries[i].pressed;
-          if (fn_pressed_) tapping_modifier_ = fn;
-          else CheckTapping(fn);
+          if (fn_pressed_) tapping_modifier_ = key;
+          else CheckTapping(key);
           break;
         }
         if (key == fnl && entries[i].pressed) {
@@ -117,7 +117,7 @@ class Layout {
       }
 
       int key = key_map[layer->keys[entry.row][entry.col]];
-      if (!key || key == fn || key == fnl) return;
+      if (!key || key == fnl || key == lfn || key == rfn) return;
 
       if (l0 <= key && key < l0 + kMaxLayers) {
         events_.RemoveReleasedKey(entry.row, entry.col);

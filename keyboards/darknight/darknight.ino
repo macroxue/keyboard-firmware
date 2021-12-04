@@ -79,14 +79,11 @@ Layer<R,C> layers[] = {
     "",  // use no translator
     {
       {0,  f1,  f2,  f3,  f4,  f5,  f6,  f7,  f8,  f9, f10, 0},
-      {0, f11, f12, vup, vdn, mut, '_', '-', '=', '+', '~', 0},
-      {0, cap, hom, pgd, pgu, end,  lt,  dn,  up,  rt, '`', 0},
-      {0, lgu, lsh, lct, 'v', 'b', '"','\'', rct, rsh, del, 0},
-      {0,  l0,  l1,  l2, lal,  fn, bks, ral,  l4,  l5,  l6, 0},
+      {0, '~', '"', '+', '_', '|', hom, pgd, pgu, end, f11, 0},
+      {0, '`','\'', '=', '-','\\',  lt,  dn,  up,  rt, f12, 0},
+      {0, lgu, lsh, lct,   0,   0,   0,   0, rct, rsh, rgu, 0},
+      {0,  l0,  l1,  l2, lal, lfn, bks, rfn,  l3,  l4,  l5, 0},
     },
-    // Tapping on modifiers to get normal keys.
-    { {fn,  bks}, {lct, 'c'}, {rct, ','}, {lsh, 'x'}, {rsh, '.'},
-      {lal, esc}, {ral, ent} }
   },
   { "darknight-mod",  // name of this layer
     l5,  // this is layer 5
@@ -97,11 +94,11 @@ Layer<R,C> layers[] = {
       {0, 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 0},
       {0, 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', 0},
       {0, 'z', lsh, lct, 'v', 'b', 'n', 'm', rct, rsh, '/', 0},
-      {0, tab, mlc, mrc, lal,  fn, spc, ral, '[', ']', '\\', 0},
+      {0, tab, mlc, mrc, lal, lfn, spc, rfn, '[', ']', del, 0},
     },
     // Tapping on modifiers to get normal keys.
-    { {fn,  bks}, {lct, 'c'}, {rct, ','}, {lsh, 'x'}, {rsh, '.'},
-      {lal, esc}, {ral, ent} }
+    { {lfn, bks}, {lct, 'c'}, {lsh, 'x'}, {lal, esc},
+      {rfn, ent}, {rct, ','}, {rsh, '.'} }
   },
 };
 
