@@ -65,8 +65,14 @@ class Layout {
         int key = key_map[cur_layer_->keys[entries[i].row][entries[i].col]];
         if (key == lfn || key == rfn) {
           fn_pressed_ = entries[i].pressed;
-          if (fn_pressed_) tapping_modifier_ = key;
-          else CheckTapping(key);
+          if (IsDualRole(key)) {
+            if (entries[i].pressed) {
+              tapping_modifier_ = key;
+              if (events_.HasAnyKey()) CheckTapping(key);
+            } else {
+              CheckTapping(key);
+            }
+          }
           break;
         }
         if (key == fnl && entries[i].pressed) {
@@ -84,7 +90,7 @@ class Layout {
     }
 
     bool IsDualRole(int key) const {
-      if (!IsModifier(key)) return false;
+      if (!IsModifier(key) && key != lfn && key != rfn) return false;
       const auto& taps = cur_layer_->taps;
       for (int i = 0; i < kMaxTaps; ++i) {
         if (taps[i].modifier == 0) return false;

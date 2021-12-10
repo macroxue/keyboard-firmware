@@ -387,7 +387,7 @@ void test_with_tapping() {
     {0,1, false},
     {1,0, false},
 
-    // q-fn --> ??
+    // q-fn --> q-bks
     {0,0, true},
     {1,1, true},
     {0,0, false},
@@ -445,6 +445,7 @@ lC-bks
 w
 lC-lS-q
 q
+q bks
 q
 lS-lt
 bks

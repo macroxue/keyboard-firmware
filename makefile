@@ -1,3 +1,4 @@
+# Change the path to match Arduino version and where it's downloaded to.
 ARDUINO=${HOME}/Downloads/arduino-1.8.7
 INCLUDES=-I${ARDUINO}/hardware/teensy/avr/cores/teensy \
          -I${ARDUINO}/hardware/teensy/avr/cores/teensy3
