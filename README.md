@@ -84,3 +84,13 @@ invoking the dumps.
 * The 'p' key shows column pins and row pins.
 * The 'l' key shows all layers.
 * The 'h' key shows heat maps of keystrokes in all layers.
+
+## Darknight-50 example
+
+Darknight-50 has only two layers: the base layer and the functional layer in
+red. All modifiers except `win` are dual-role so more keys are squeezed into
+this compact layout. This is probably the smallest keyboard I would use.
+See detailed definition in [`darknight.ino`](https://github.com/macroxue/keyboard-firmware/blob/master/keyboards/darknight/darknight.ino).
+
+![Darknight-50 example](https://github.com/macroxue/keyboard-firmware/blob/master/keyboards/darknight/darknight-50.png)
+
