@@ -26,6 +26,7 @@ class RealSender : public Sender {
       Mouse.set_buttons(events.buttons[0], events.buttons[1], events.buttons[2]);
       if (events.buttons[mdc - mlc]) {
         Mouse.click();
+        delay(30);
         Mouse.click();
       }
       if (events.buttons[msu - mlc]) {
