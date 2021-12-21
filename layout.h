@@ -99,9 +99,9 @@ class Layout {
       return false;
     }
 
-    void CheckTapping(int modifier) {
+    void CheckTapping(int modifier, const Layer<R,C>* layer = nullptr) {
       if (tapping_modifier_ != modifier) return;
-      const auto& taps = cur_layer_->taps;
+      const auto& taps = layer ? layer->taps : cur_layer_->taps;
       for (int i = 0; i < kMaxTaps; ++i) {
         if (taps[i].modifier == 0) return;
         if (key_map[taps[i].modifier] == modifier) {
@@ -146,11 +146,11 @@ class Layout {
       if (IsDualRole(key)) {
         if (entry.pressed) {
           tapping_modifier_ = key;
-          if (events_.HasAnyKey()) CheckTapping(key);
+          if (events_.HasAnyKey()) CheckTapping(key, layer);
           else events_.modifiers |= key;
         } else {
           events_.modifiers &= ~key;
-          CheckTapping(key);
+          CheckTapping(key, layer);
         }
       } else if (IsModifier(key)) {
         if (entry.pressed) events_.modifiers |= key;
