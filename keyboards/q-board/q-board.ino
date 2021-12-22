@@ -42,7 +42,7 @@ Layer<R,C> layers[] = {
       { f1,  f2,  f3,  f4,  f5,   0,   0,  f6,  f7,  f8,  f9, f10},
       {'~', '"', '+', '_', '|',   0,   0, mdc, mlc, mmc, mrc, f11},
       {'`','\'', '=', '-','\\',   0,   0,  lt,  dn,  up,  rt, f12},
-      {  0, lsh,   0,   0,   0,   0,   0, hom, pgd, pgu, rsh,   0},
+      {  0, lsh, vdn, vup, mut,   0,   0, hom, pgd, pgu, rsh,   0},
       {lgu,  l0,  l1, lal, lfn, lct, rct, bks, rfn,   0,   0, ral},
     },
     // Tapping on modifiers to get normal keys.
