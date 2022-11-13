@@ -56,7 +56,7 @@ Layer<R,C> layers[] = {
       {tab,   0, mut, vdn, vup,   0,   0,   0,   0,   0,   0, cap},
       {lct, ply, pau, rew, ffw, rec,  lt,  dn,  up,  rt,   0, rct},
       {lsh,   0, stp, ptk, ntk, ejt, hom, pgd, pgu, end,   0, rsh},
-      {lgu,  l0,  l1,  l2, lal,  fn, bks, ral,  l3,  l4,  l5, del},
+      {lgu,  l0,  l1,  l2, lal,  fn, bks, ral,  l3,  l4,  l5,  l6},
     },
     // Tapping on modifiers to get normal keys.
     { {fn,  bks}, {lct, esc}, {rct, ent} }
@@ -81,8 +81,8 @@ Layer<R,C> layers[] = {
       {0,  f1,  f2,  f3,  f4,  f5,  f6,  f7,  f8,  f9, f10, 0},
       {0, '~', '"', '_', '+', '|', hom, pgd, pgu, end, f11, 0},
       {0, '`','\'', '-', '=','\\',  lt,  dn,  up,  rt, f12, 0},
-      {0, lct, lsh, cap,  l0,   0, mut, vdn, vup, rsh, rct, 0},
-      {0, lgu,  l1,  l2, lal, lfn, tab, rfn,  l3,  l4,  l5, 0},
+      {0, lct, lsh, '(', ')', bks, mut, vdn, vup, rsh, rct, 0},
+      {0, lgu,  l0,  l1, lal, lfn, tab, rfn,  l2,  l3, ral, 0},
     },
   },
   { "darknight-mod",  // name of this layer
@@ -99,6 +99,32 @@ Layer<R,C> layers[] = {
     // Tapping on modifiers to get normal keys.
     { {lfn, bks}, {lct, 'z'}, {lsh, 'x'}, {lal, esc},
       {rfn, ent}, {rct, '/'}, {rsh, '.'}, {ral, del} }
+  },
+  { "ergo",  // name of this layer
+    l6,  // this is layer 6
+    l7,  // Fn layer is layer 7
+    "",  // use no translator
+    {
+      {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='},
+      {tab, 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p','\''},
+      {esc, 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', ent},
+      {lsh, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', rsh},
+      {lgu, '`', mlc, mrc, lal,  fn, spc, rct, '[', ']','\\', del},
+    },
+    // Tapping on modifiers to get normal keys.
+    { {fn,  bks} }
+  },
+  { "ergo-fn",  // name of this layer
+    l7,  // this is layer 7
+    l7,  // Fn layer is layer 7
+    "",  // use no translator
+    {
+      { f1,  f2,  f3,  f4,  f5,  f6,  f7,  f8,  f9, f10, f11, f12},
+      {tab,   0, mut, vdn, vup,   0,   0, pgu,  up, pgd,   0, cap},
+      {esc, ptk, rew, ppa, ffw, ntk,   0,  lt,  dn,  rt,   0, ent},
+      {lsh,   0,   0,   0,   0,   0,   0, hom,   0, end,   0, rsh},
+      {lgu,   0, mlc, mrc, lal,  fn, bks, rct,  l0,  l1,   0, del},
+    },
   },
 };
 
